@@ -2,8 +2,9 @@
 import { motion } from "framer-motion";
 import { CheckCircle, Home, Share2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-const Success = ({}) => {
+const SuccessContent = () => {
   const searchParams = useSearchParams();
   const transactionId = searchParams.get("transactionId") || "N/A";
   const onHome = () => {};
@@ -66,4 +67,13 @@ const Success = ({}) => {
   );
 };
 
-export default Success;
+// 3. The main page component wraps the content in Suspense
+export default function SuccessPage() {
+  return (
+    <div className="min-h-[70vh] flex items-center justify-center px-4">
+      <Suspense fallback={<div className="animate-pulse">Loading...</div>}>
+        <SuccessContent />
+      </Suspense>
+    </div>
+  );
+}
