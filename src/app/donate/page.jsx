@@ -1,0 +1,173 @@
+"use client";
+import { motion } from "framer-motion";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+const Donate = ({ onSuccess }) => {
+  const router = useRouter();
+  const onBack = () => {
+    router.back();
+  };
+  const [currency, setCurrency] = useState("BDT");
+  const [amount, setAmount] = useState("");
+  const [name, setName] = useState("");
+  const [method, setMethod] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!amount || !method)
+      return alert("অনুগ্রহ করে পরিমাণ এবং পেমেন্ট পদ্ধতি নির্বাচন করুন");
+    const fakeTxnId =
+      "TXN" + Math.random().toString(36).substr(2, 9).toUpperCase();
+    router.push(`/succes?transactionId=${fakeTxnId}`);
+  };
+
+  const paymentMethods = [
+    {
+      id: "bkash",
+      name: "বিকাশ",
+      color: "bg-pink-100 border-pink-200 text-pink-700",
+    },
+    {
+      id: "nagad",
+      name: "নগদ",
+      color: "bg-orange-100 border-orange-200 text-orange-700",
+    },
+    {
+      id: "rocket",
+      name: "রকেট",
+      color: "bg-purple-100 border-purple-200 text-purple-700",
+    },
+    {
+      id: "bank",
+      name: "ব্যাংক ট্রান্সফার",
+      color: "bg-blue-100 border-blue-200 text-blue-700",
+    },
+  ];
+
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-12">
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-slate-500 hover:text-slate-800 mb-8 transition"
+      >
+        <ArrowLeft size={20} /> ফিরে যান
+      </button>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-3xl shadow-2xl p-8 border border-slate-100"
+      >
+        <h2 className="text-3xl font-bold text-center text-slate-800 mb-2">
+          সহযোগিতা করুন
+        </h2>
+        <p className="text-center text-slate-500 mb-8">
+          আপনার সামান্য সাহায্য অনেক বড় ভূমিকা রাখবে
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Currency Toggle */}
+          <div className="flex justify-center p-1 bg-slate-100 rounded-full w-48 mx-auto">
+            <button
+              type="button"
+              onClick={() => setCurrency("BDT")}
+              className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
+                currency === "BDT"
+                  ? "bg-white shadow-sm text-rose-500"
+                  : "text-slate-500"
+              }`}
+            >
+              BDT (৳)
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrency("USD")}
+              className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
+                currency === "USD"
+                  ? "bg-white shadow-sm text-rose-500"
+                  : "text-slate-500"
+              }`}
+            >
+              USD ($)
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">
+                আপনার নাম
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="নাম (ঐচ্ছিক)"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">
+                পরিমাণ ({currency === "BDT" ? "৳" : "$"})
+              </label>
+              <input
+                type="number"
+                required
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0.00"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none text-2xl font-bold"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-3">
+                পেমেন্ট পদ্ধতি নির্বাচন করুন
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {paymentMethods.map((pm) => (
+                  <div
+                    key={pm.id}
+                    onClick={() => setMethod(pm.id)}
+                    className={`cursor-pointer p-4 rounded-xl border-2 transition flex items-center justify-between ${
+                      pm.color
+                    } ${
+                      method === pm.id
+                        ? "ring-2 ring-offset-2 ring-slate-400"
+                        : "opacity-70 grayscale-[0.5]"
+                    }`}
+                  >
+                    <span className="font-bold">{pm.name}</span>
+                    {method === pm.id && <CheckCircle2 size={18} />}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-slate-700 mb-1">
+                ছোট একটি বার্তা
+              </label>
+              <textarea
+                rows={3}
+                placeholder="আপনার শুভকামনা জানান..."
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-rose-500 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-rose-600 transition"
+          >
+            পেমেন্ট সম্পন্ন করুন
+          </button>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+export default Donate;
