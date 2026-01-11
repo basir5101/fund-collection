@@ -1,7 +1,10 @@
-"use client";
+import { getDonors } from "@/actions/donors";
 import { Clock, Heart, User } from "lucide-react";
+import moment from "moment";
 
-export default function DonorList({ donors }) {
+export default async function LatestDonorsMarquee() {
+  const donorResponse = await getDonors(1, 5);
+  const donors = donorResponse.donors;
   return (
     <section className="bg-[#F7FCFA] py-16 px-4 min-h-screen">
       <div className="max-w-4xl mx-auto">
@@ -38,7 +41,7 @@ export default function DonorList({ donors }) {
                 </span>
                 <div className="flex items-center text-emerald-500/80 text-sm mt-1">
                   <Clock size={14} className="mr-1.5" />
-                  <span>২ ঘণ্টা আগে</span>
+                  <span> {moment(donor.date).fromNow()} </span>
                 </div>
               </div>
 

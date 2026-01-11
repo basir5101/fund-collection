@@ -1,0 +1,97 @@
+"use server";
+import dbConnect from "@/lib/mongodb";
+import Donor from "@/models/Donors";
+import { revalidatePath } from "next/cache";
+
+export async function addDonor(formData) {
+  await dbConnect();
+
+  try {
+    const rawData = {
+      name: formData.get("name"),
+      amount: Number(formData.get("amount")),
+      medium: formData.get("medium"),
+      message: formData.get("message"),
+      transactionId: formData.get("transactionId"),
+    };
+
+    await Donor.create(rawData);
+    revalidatePath("/admin/donors"); // পেজ রিফ্রেশ না করেই ডাটা আপডেট হবে
+    revalidatePath("/");
+    revalidatePath("/donors");
+
+    return { success: true, message: "ডোনার সফলভাবে যোগ করা হয়েছে!" };
+  } catch (error) {
+    return { success: false, message: "ত্রুটি: " + error.message };
+  }
+}
+
+export async function getDonors(page = 1, limit = 20, searchTerm = "") {
+  await dbConnect();
+  const skip = (page - 1) * limit;
+
+  // সার্চ টার্ম থাকলে transactionId দিয়ে ফিল্টার করবে
+  const query = searchTerm
+    ? { transactionId: { $regex: searchTerm, $options: "i" } }
+    : {};
+
+  const donors = await Donor.find(query)
+    .sort({ date: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  const total = await Donor.countDocuments(query);
+
+  return {
+    donors: JSON.parse(JSON.stringify(donors)),
+    totalPages: Math.ceil(total / limit),
+    currentPage: page,
+  };
+}
+
+export async function getDonationStatsByMedium() {
+  await dbConnect();
+
+  try {
+    const stats = await Donor.aggregate([
+      {
+        // medium অনুযায়ী গ্রুপ করবে এবং অ্যামাউন্ট যোগ করবে
+        $group: {
+          _id: "$medium",
+          total: { $sum: "$amount" },
+        },
+      },
+      {
+        // আউটপুট ফরম্যাট আপনার রিকোয়েস্ট অনুযায়ী সেট করা হয়েছে
+        $project: {
+          _id: 0, // ডিফল্ট আইডি বাদ দেওয়া হয়েছে
+          type: "$_id", // _id কে type হিসেবে দেখানো হয়েছে
+          amount: "$total", // total কে amount হিসেবে দেখানো হয়েছে
+        },
+      },
+      {
+        // চাইলে সর্ট করে নিতে পারেন (অ্যামাউন্টের ভিত্তিতে বড় থেকে ছোট)
+        $sort: { amount: -1 },
+      },
+    ]);
+
+    return { success: true, data: stats };
+  } catch (error) {
+    console.error("Aggregation Error:", error);
+    return { success: false, message: "হিসাব বের করতে সমস্যা হয়েছে" };
+  }
+}
+
+export async function deleteDonor(id) {
+  await dbConnect();
+
+  try {
+    await Donor.findByIdAndDelete(id);
+    revalidatePath("/donors"); // ডিলিট হওয়ার পর লিস্ট আপডেট করবে
+    revalidatePath("/");
+    revalidatePath("/admin/donors");
+    return { success: true, message: "ডোনারের তথ্য মুছে ফেলা হয়েছে" };
+  } catch (error) {
+    return { success: false, message: "মুছে ফেলতে ব্যর্থ: " + error.message };
+  }
+}

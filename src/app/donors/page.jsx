@@ -1,81 +1,121 @@
-"use client";
-import { MOCK_DONORS } from "@/lib/constant";
-import { Heart, Search } from "lucide-react";
-import { useState } from "react";
+import { getDonors } from "@/actions/donors";
+import { ChevronLeft, ChevronRight, Clock, Heart, SearchX } from "lucide-react";
+import Link from "next/link";
+import SearchDonors from "./SearchDonors";
 
-const DonorList = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+export default async function DonorsPage({ searchParams }) {
+  const params = await searchParams;
+  const page = parseInt(params.page) || 1;
+  const search = params.search || ""; // URL থেকে সার্চ টার্ম নেওয়া
 
-  const filteredDonors = MOCK_DONORS.filter(
-    (donor) =>
-      donor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      donor.transactionId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const { donors, totalPages, currentPage } = await getDonors(page, 20, search);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          আমাদের গর্বিত দাতারা
-        </h1>
-        <p className="text-slate-500">
-          আপনাদের সকলের সাহায্যের তালিকা এখানে সংরক্ষিত রয়েছে
-        </p>
-      </div>
+    <div className="min-h-screen bg-[#F7FCFA] py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-black text-emerald-950 mb-3">
+            আমাদের গর্বিত দাতারা
+          </h1>
+          <p className="text-emerald-600 font-medium">
+            আপনাদের সকলের সাহায্যের তালিকা এখানে সংরক্ষিত রয়েছে
+          </p>
+        </div>
 
-      <div className="relative max-w-md mx-auto mb-10">
-        <Search
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-          size={20}
-        />
-        <input
-          type="text"
-          placeholder="নাম বা ট্রানজেকশন আইডি দিয়ে খুঁজুন..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none shadow-sm"
-        />
-      </div>
+        {/* Search Option */}
+        <SearchDonors />
 
-      <div className="grid gap-6">
-        {filteredDonors.length > 0 ? (
-          filteredDonors.map((donor) => (
-            <div
-              key={donor.id}
-              className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <Heart className="text-green-500 fill-green-500" size={24} />
+        {/* Donors List */}
+        <div className="space-y-4">
+          {donors.length > 0 ? (
+            donors.map((donor, idx) => (
+              <div
+                key={donor._id}
+                className="flex items-center space-x-4 bg-white p-6 rounded-3xl border border-emerald-50 shadow-sm transition-all hover:shadow-md"
+              >
+                <div className="w-14 h-14 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-100">
+                  <Heart size={24} fill="currentColor" />
                 </div>
-                <div>
-                  <h3 className="font-bold text-slate-800 text-lg">
+
+                <div className="flex flex-col flex-grow">
+                  <span className="font-bold text-emerald-900 text-xl">
                     {donor.name}
-                  </h3>
-                  <p className="text-sm text-slate-500">
-                    {donor.date} • ID: {donor.transactionId}
-                  </p>
-                  <p className="text-slate-600 italic mt-1 text-sm">
-                    {`"${donor.message}"`}
-                  </p>
+                  </span>
+                  <div className="flex flex-col text-emerald-500/80 text-sm mt-1">
+                    <div className="flex items-center">
+                      <Clock size={14} className="mr-1.5" />
+                      <span>{donor.medium} এর মাধ্যমে</span>
+                    </div>
+                    {donor.transactionId && (
+                      <span className="text-[10px] font-mono text-gray-400 mt-1 uppercase">
+                        TrxID: {donor.transactionId}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span className="font-black text-emerald-600 text-2xl">
+                    ৳{donor.amount.toLocaleString()}
+                  </span>
+                  {idx === 0 && currentPage === 1 && !search && (
+                    <span className="block bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase text-center mt-1">
+                      সর্বশেষ
+                    </span>
+                  )}
                 </div>
               </div>
-              <div className="text-right">
-                <span className="text-2xl font-bold text-green-500">
-                  {donor.currency === "BDT" ? "৳" : "$"}
-                  {donor.amount}
-                </span>
-              </div>
+            ))
+          ) : (
+            /* No Results Found */
+            <div className="text-center py-20 bg-white rounded-[3rem] border border-dashed border-emerald-200">
+              <SearchX size={48} className="mx-auto text-emerald-200 mb-4" />
+              <p className="text-emerald-900 font-bold text-xl">
+                কোনো তথ্য পাওয়া যায়নি
+              </p>
+              <p className="text-emerald-500">
+                অন্য কোনো ট্রানজেকশন আইডি দিয়ে চেষ্টা করুন
+              </p>
             </div>
-          ))
-        ) : (
-          <div className="text-center py-20 text-slate-400">
-            কোনো দাতা খুঁজে পাওয়া যায়নি
+          )}
+        </div>
+
+        {/* Pagination Controls - শুধুমাত্র রেজাল্ট থাকলে দেখাবে */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center space-x-4 mt-12">
+            <Link
+              href={`?page=${Math.max(1, currentPage - 1)}${
+                search ? `&search=${search}` : ""
+              }`}
+              className={`p-3 rounded-full bg-white border border-emerald-100 ${
+                currentPage === 1
+                  ? "opacity-30 pointer-events-none"
+                  : "hover:bg-emerald-50"
+              }`}
+            >
+              <ChevronLeft className="text-emerald-600" />
+            </Link>
+
+            <span className="font-bold text-emerald-900">
+              পেজ {currentPage} / {totalPages}
+            </span>
+
+            <Link
+              href={`?page=${Math.min(totalPages, currentPage + 1)}${
+                search ? `&search=${search}` : ""
+              }`}
+              className={`p-3 rounded-full bg-white border border-emerald-100 ${
+                currentPage === totalPages
+                  ? "opacity-30 pointer-events-none"
+                  : "hover:bg-emerald-50"
+              }`}
+            >
+              <ChevronRight className="text-emerald-600" />
+            </Link>
           </div>
         )}
       </div>
     </div>
   );
-};
-
-export default DonorList;
+}
