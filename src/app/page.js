@@ -1,135 +1,19 @@
-"use client";
-import { motion } from "framer-motion";
-import { Camera, Clock, Share2, ShieldCheck } from "lucide-react";
-// import ProgressBar from '../components/ProgressBar';
-import ProgressBar from "@/components/ProgressBar";
-import { GALLERY_IMAGES, MOCK_DONORS, MOCK_STATS } from "@/lib/constant";
+import Home from "@/components/Home";
+import dbConnect from "@/lib/mongodb";
+import HomeContent from "@/models/HomePage";
 
-export default function Home() {
-  const onDonate = () => {};
+export default async function page() {
+  await dbConnect();
+  // Convert Mongoose doc to a plain JavaScript object
+  const rawContent = await HomeContent.findOne().lean();
+  const homeContent = rawContent
+    ? JSON.parse(JSON.stringify(rawContent))
+    : null;
+
+  console.log("homeContent", homeContent);
   return (
-    <div className="space-y-16 pb-20">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 md:pt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-6"
-          >
-            একটি জীবন বাঁচাতে <br />
-            <span className="text-rose-500">আমাদের সবার সাহায্য চাই</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10"
-          >
-            আমাদের কাছের মানুষটি ক্যান্সারের সাথে যুদ্ধ করছে। চিকিৎসার জন্য
-            বিপুল অর্থের প্রয়োজন। আপনার সামান্য দান তার জীবন ফিরিয়ে দিতে পারে।
-          </motion.p>
-
-          <div className="max-w-3xl mx-auto mb-12">
-            <ProgressBar stats={MOCK_STATS} />
-          </div>
-
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row justify-center gap-4"
-          >
-            <button
-              onClick={onDonate}
-              className="bg-rose-500 text-white text-lg font-bold px-12 py-4 rounded-full shadow-2xl hover:bg-rose-600 transform hover:scale-105 transition"
-            >
-              এখনই দান করুন
-            </button>
-            <button className="flex items-center justify-center gap-2 border-2 border-slate-200 px-8 py-4 rounded-full font-bold hover:bg-slate-50 transition">
-              <Share2 size={20} /> শেয়ার করুন
-            </button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Marquee Donors */}
-      <section className="bg-slate-50 py-6 overflow-hidden">
-        <div className="flex whitespace-nowrap animate-[marquee_30s_linear_infinite] items-center space-x-12">
-          {MOCK_DONORS.concat(MOCK_DONORS).map((donor, idx) => (
-            <div
-              key={idx}
-              className="flex items-center space-x-2 text-slate-600"
-            >
-              <span className="w-2 h-2 rounded-full bg-rose-400"></span>
-              <span className="font-semibold">{donor.name}:</span>
-              <span className="font-bold text-rose-500">৳{donor.amount}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why This Campaign */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-slate-900 border-l-4 border-rose-500 pl-4">
-              কেন এই উদ্যোগ?
-            </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed text-lg">
-              <p>
-                গত ৩ মাস ধরে আমাদের প্রিয় এই মানুষটি ব্লাড ক্যান্সারের সাথে লড়াই
-                করছে। ইতিমধ্যেই বেশ কিছু কেমোথেরাপি সম্পন্ন হয়েছে, তবে পূর্ণাঙ্গ
-                সুস্থতার জন্য প্রয়োজন বোন ম্যারো ট্রান্সপ্ল্যান্ট।
-              </p>
-              <p>
-                মধ্যবিত্ত পরিবারের পক্ষে এই বিপুল খরচ বহন করা প্রায় অসম্ভব হয়ে
-                দাঁড়িয়েছে। আপনার দান হতে পারে তার বাঁচার শেষ অবলম্বন।
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Clock size={16} /> সময় অতিবাহিত হচ্ছে
-              </div>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <ShieldCheck size={16} /> ১০০% স্বচ্ছতা নিশ্চিত
-              </div>
-            </div>
-          </div>
-          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl">
-            <img
-              src="https://picsum.photos/seed/hospital/800/600"
-              alt="Medical Journey"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 mb-8">
-          <Camera className="text-rose-500" />
-          <h2 className="text-3xl font-bold text-slate-900">
-            গ্যালারি ও তথ্যচিত্র
-          </h2>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {GALLERY_IMAGES.map((img, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.05 }}
-              className="aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-md"
-            >
-              <img
-                src={img}
-                alt={`Gallery ${i}`}
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          ))}
-        </div>
-      </section>
+    <div>
+      <Home homeContent={homeContent} />
     </div>
   );
 }

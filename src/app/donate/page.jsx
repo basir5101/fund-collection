@@ -75,7 +75,7 @@ const Donate = ({ onSuccess }) => {
               onClick={() => setCurrency("BDT")}
               className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
                 currency === "BDT"
-                  ? "bg-white shadow-sm text-rose-500"
+                  ? "bg-white shadow-sm text-green-500"
                   : "text-slate-500"
               }`}
             >
@@ -86,7 +86,7 @@ const Donate = ({ onSuccess }) => {
               onClick={() => setCurrency("USD")}
               className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
                 currency === "USD"
-                  ? "bg-white shadow-sm text-rose-500"
+                  ? "bg-white shadow-sm text-green-500"
                   : "text-slate-500"
               }`}
             >
@@ -104,7 +104,7 @@ const Donate = ({ onSuccess }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="নাম (ঐচ্ছিক)"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
 
@@ -118,7 +118,7 @@ const Donate = ({ onSuccess }) => {
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none text-2xl font-bold"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none text-2xl font-bold"
               />
             </div>
 
@@ -153,14 +153,14 @@ const Donate = ({ onSuccess }) => {
               <textarea
                 rows={3}
                 placeholder="আপনার শুভকামনা জানান..."
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-rose-500 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-rose-600 transition"
+            className="w-full bg-green-500 text-white font-bold py-4 rounded-xl shadow-xl hover:bg-green-600 transition"
           >
             পেমেন্ট সম্পন্ন করুন
           </button>

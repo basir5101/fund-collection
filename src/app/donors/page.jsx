@@ -33,7 +33,7 @@ const DonorList = () => {
           placeholder="নাম বা ট্রানজেকশন আইডি দিয়ে খুঁজুন..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-rose-500 outline-none shadow-sm"
+          className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none shadow-sm"
         />
       </div>
 
@@ -45,8 +45,8 @@ const DonorList = () => {
               className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
-                  <Heart className="text-rose-500 fill-rose-500" size={24} />
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <Heart className="text-green-500 fill-green-500" size={24} />
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-800 text-lg">
@@ -61,7 +61,7 @@ const DonorList = () => {
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-bold text-rose-500">
+                <span className="text-2xl font-bold text-green-500">
                   {donor.currency === "BDT" ? "৳" : "$"}
                   {donor.amount}
                 </span>

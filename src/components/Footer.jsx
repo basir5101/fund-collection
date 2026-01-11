@@ -13,8 +13,8 @@ const Footer = () => {
               করা হয়।
             </p>
             <div className="flex space-x-4">
-              <Facebook className="hover:text-rose-500 cursor-pointer transition" />
-              <Instagram className="hover:text-rose-500 cursor-pointer transition" />
+              <Facebook className="hover:text-green-500 cursor-pointer transition" />
+              <Instagram className="hover:text-green-500 cursor-pointer transition" />
             </div>
           </div>
 
@@ -37,7 +37,7 @@ const Footer = () => {
             <h3 className="text-white text-lg font-bold mb-4">
               সতর্কতা ও স্বচ্ছতা
             </h3>
-            <p className="text-xs leading-relaxed italic border-l-2 border-rose-500 pl-4">
+            <p className="text-xs leading-relaxed italic border-l-2 border-green-500 pl-4">
               {` "এই প্রচারণায় সংগৃহীত অর্থের হিসাব প্রতি রবিবার হালনাগাদ করা হয়।
               কোনো প্রকার অসামঞ্জস্য মনে হলে তাৎক্ষণিক যোগাযোগ করার অনুরোধ রইল।"`}
             </p>

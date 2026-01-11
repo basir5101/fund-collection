@@ -37,7 +37,7 @@ const SuccessContent = () => {
 
         <div className="space-y-4">
           <button
-            className="w-full bg-rose-500 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-rose-600 transition"
+            className="w-full bg-green-500 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-green-600 transition"
             onClick={() => {
               navigator
                 .share?.({
