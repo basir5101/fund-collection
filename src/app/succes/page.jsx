@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { CheckCircle, Home, Share2 } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -29,7 +30,7 @@ const SuccessContent = () => {
         </p>
 
         <div className="bg-slate-50 p-4 rounded-xl mb-8 border border-dashed border-slate-300">
-          <p className="text-xs text-slate-500 mb-1">ট্রানজেকশন আইডি</p>
+          <p className="text-xs text-slate-500 mb-1">আপনার ট্রানজেকশন আইডি</p>
           <p className="font-mono font-bold text-xl text-slate-800 tracking-wider">
             {transactionId}
           </p>
@@ -55,12 +56,18 @@ const SuccessContent = () => {
             <Share2 size={20} /> প্রচারণা শেয়ার করুন
           </button>
 
-          <button
+          {/* <button
             onClick={onHome}
             className="w-full border-2 border-slate-200 text-slate-600 font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition"
           >
             <Home size={20} /> হোম পেজে ফিরে যান
-          </button>
+            </button> */}
+          <Link
+            href="/"
+            className="w-full border-2 border-slate-200 text-slate-600 font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition"
+          >
+            <Home size={20} /> হোম পেজে ফিরে যান
+          </Link>
         </div>
       </motion.div>
     </div>
