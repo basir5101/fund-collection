@@ -9,17 +9,34 @@ const Donate = ({ onSuccess }) => {
   const onBack = () => {
     router.back();
   };
+
   const [currency, setCurrency] = useState("BDT");
   const [amount, setAmount] = useState("");
   const [name, setName] = useState("");
   const [method, setMethod] = useState("");
+  const [anonymous, setAnonymous] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!amount || !method)
-      return alert("অনুগ্রহ করে পরিমাণ এবং পেমেন্ট পদ্ধতি নির্বাচন করুন");
+
+    if (!amount || !method) {
+      alert("অনুগ্রহ করে পরিমাণ এবং পেমেন্ট পদ্ধতি নির্বাচন করুন");
+      return;
+    }
     const fakeTxnId =
       "TXN" + Math.random().toString(36).substr(2, 9).toUpperCase();
+    const formData = {
+      currency,
+      amount: Number(amount),
+      name: anonymous ? "Anonymous" : name.trim() || "Not provided",
+      paymentMethod: method,
+      anonymous,
+      message: message.trim() || "No message",
+      submittedAt: new Date().toISOString(),
+      fakeTransactionId: fakeTxnId,
+    };
+    console.log(formData);
     router.push(`/succes?transactionId=${fakeTxnId}`);
   };
 
@@ -81,7 +98,7 @@ const Donate = ({ onSuccess }) => {
             >
               BDT (৳)
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={() => setCurrency("USD")}
               className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
@@ -91,7 +108,7 @@ const Donate = ({ onSuccess }) => {
               }`}
             >
               USD ($)
-            </button>
+            </button> */}
           </div>
 
           <div className="space-y-4">
@@ -104,8 +121,28 @@ const Donate = ({ onSuccess }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="নাম (ঐচ্ছিক)"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none"
+                disabled={anonymous}
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none disabled:bg-slate-100"
               />
+            </div>
+
+            <div className="flex items-center">
+              <input
+                id="anonymous"
+                type="checkbox"
+                checked={anonymous}
+                onChange={(e) => {
+                  setAnonymous(e.target.checked);
+                  if (e.target.checked) setName("");
+                }}
+                className="h-4 w-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label
+                htmlFor="anonymous"
+                className="ml-2 block text-sm text-gray-600"
+              >
+                নাম প্রকাশ করতে চাই না
+              </label>
             </div>
 
             <div>
@@ -152,6 +189,8 @@ const Donate = ({ onSuccess }) => {
               </label>
               <textarea
                 rows={3}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="আপনার শুভকামনা জানান..."
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-green-500 outline-none"
               />
