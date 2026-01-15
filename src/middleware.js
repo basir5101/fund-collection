@@ -1,42 +1,8 @@
-import { NextResponse } from "next/server";
+// middleware.js
+export const runtime = "nodejs"; // Add this to force Node.js runtime
+export { auth as middleware } from "@/auth";
 
-export function middleware(req) {
-  const authHeader = req.headers.get("authorization");
-  // Define the path you want to protect
-  if (req.nextUrl.pathname.startsWith("/admin")) {
-    if (!authHeader) {
-      return new NextResponse("Authentication required", {
-        status: 401,
-        headers: {
-          "WWW-Authenticate": 'Basic realm="Admin Area"',
-        },
-      });
-    }
-
-    // Decode the Base64 credentials
-    const auth = Buffer.from(authHeader.split(" ")[1], "base64")
-      .toString()
-      .split(":");
-    const user = auth[0];
-    const pass = auth[1];
-
-    // Check against environment variables
-    if (user === process.env.ADMIN_USER && pass === process.env.ADMIN_PASS) {
-      return NextResponse.next();
-    }
-
-    return new NextResponse("Invalid credentials", {
-      status: 401,
-      headers: {
-        "WWW-Authenticate": 'Basic realm="Admin Area"',
-      },
-    });
-  }
-
-  return NextResponse.next();
-}
-
-// Optimization: Only run this middleware on admin routes
+// This config ensures the middleware only runs on specific paths
 export const config = {
-  matcher: "/admin/:path*",
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

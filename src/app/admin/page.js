@@ -1,7 +1,11 @@
+import { auth } from "@/auth";
 import { ChevronRight, Clock, GalleryHorizontal, Heart } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function NavigationPage() {
+export default async function NavigationPage() {
+  const session = await auth();
+  if (!session) return redirect("/login");
   const routes = [
     {
       href: "/admin/donors",
