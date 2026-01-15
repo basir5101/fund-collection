@@ -65,10 +65,10 @@ export default function DonationStatus({ stats, event }) {
     <section className="max-w-7xl mx-5 lg:mx-auto my-10 p-8 bg-green-100 rounded-[2.5rem] shadow-sm border border-emerald-50">
       {/* Header */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-green-800 mb-2">
+        <h2 className="text-3xl lg:text-4xl font-bold text-green-800 mb-2">
           ডোনেশন প্রগ্রেস
         </h2>
-        <p className="text-green-500 font-medium">
+        <p className="text-green-500 font-medium text-sm lg:text-base">
           আপনার সহযোগিতায় আমরা এগিয়ে যাচ্ছি
         </p>
       </div>

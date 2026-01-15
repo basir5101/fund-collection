@@ -4,7 +4,7 @@ import { Share2 } from "lucide-react";
 // import ProgressBar from '../components/ProgressBar';
 import Link from "next/link";
 import heroBanner from "@/assets/hero/hero-banner.png";
-import bookIcon from "@/assets/icons/book.png";
+import paymentIcon from "@/assets/icons/payment.png";
 import Image from "next/image";
 import { div } from "framer-motion/client";
 
@@ -61,7 +61,7 @@ export default function Hero() {
               <div className="p-3 flex items-center gap-2">
                 <div className="bg-green-200 rounded-full w-10 h-10 grid shrink-0 place-items-center p-2">
                   <Image
-                    src={bookIcon}
+                    src={paymentIcon}
                     width={60}
                     height={60}
                     alt="Book icon"
@@ -69,8 +69,8 @@ export default function Hero() {
                   />
                 </div>
                 <div className="text-sm">
-                  <p className="font-semibold">৫০টি বই</p>
-                  <span className="text-xs text-mute">বিতরণ করা হয়েছে</span>
+                  <p className="font-semibold">একটু সাহায্য</p>
+                  <span className="text-xs text-mute">অনেক বড় পরিবর্তন</span>
                 </div>
               </div>
             </div>
