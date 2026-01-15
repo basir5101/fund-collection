@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Globe, Landmark, Smartphone, Wallet } from "lucide-react";
+import { Globe, HandHelping, Landmark, Smartphone, Wallet } from "lucide-react";
 
 export default function DonationStatus({ stats, event }) {
   // 1. Total Calculation
@@ -19,42 +19,49 @@ export default function DonationStatus({ stats, event }) {
     {
       label: "ওয়েবসাইট",
       key: "website",
-      icon: <Globe size={18} />,
+      icon: <Globe size={24} />,
       color: "text-emerald-600",
       bg: "bg-emerald-50",
     },
     {
       label: "bKash",
       key: "bkash",
-      icon: <Smartphone size={18} />,
+      icon: <Smartphone size={24} />,
       color: "text-pink-600",
       bg: "bg-pink-50",
     },
     {
       label: "Nagad",
       key: "nagad",
-      icon: <Smartphone size={18} />,
+      icon: <Smartphone size={24} />,
       color: "text-orange-600",
       bg: "bg-orange-50",
     },
     {
       label: "Rocket",
       key: "rocket",
-      icon: <Wallet size={18} />,
+      icon: <Wallet size={24} />,
       color: "text-purple-600",
       bg: "bg-purple-50",
     },
     {
       label: "ব্যাংক",
       key: "bank",
-      icon: <Landmark size={18} />,
+      icon: <Landmark size={24} />,
       color: "text-blue-600",
       bg: "bg-blue-50",
+    },
+    {
+      label: "ক্যাম্পেইন",
+      key: "campain",
+      icon: <HandHelping size={24} />,
+      color: "text-teal-600",
+      bg: "bg-teal-50",
     },
   ];
 
   return (
-    <section className="max-w-5xl mx-auto my-10 p-8 bg-[#F0F9F6] rounded-[2.5rem] shadow-sm border border-emerald-50">
+    <section className="max-w-7xl mx-5 lg:mx-auto my-10 p-8 bg-green-100 rounded-[2.5rem] shadow-sm border border-emerald-50">
       {/* Header */}
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-green-800 mb-2">
@@ -102,7 +109,7 @@ export default function DonationStatus({ stats, event }) {
         <p className="text-sm font-bold text-green-700 mb-6">
           মাধ্যম অনুযায়ী লক্ষ্যমাত্রার কত অংশ সংগৃহীত
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {sourceConfigs.map((config) => {
             // 4. Find amount from stats
             const statEntry = stats?.find((s) => s.type === config.key);
@@ -116,10 +123,10 @@ export default function DonationStatus({ stats, event }) {
             return (
               <div
                 key={config.key}
-                className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex flex-col items-center transition-all hover:shadow-md group"
+                className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center transition-all hover:shadow-md group"
               >
                 <div
-                  className={`p-3 rounded-2xl mb-3 ${config.bg} ${config.color} transition-transform group-hover:scale-110`}
+                  className={`p-3 rounded-full mb-3 ${config.bg} ${config.color} transition-transform group-hover:scale-110`}
                 >
                   {config.icon}
                 </div>
@@ -128,7 +135,7 @@ export default function DonationStatus({ stats, event }) {
                   {config.label}
                 </span>
 
-                <span className={`text-lg font-black ${config.color} mb-3`}>
+                <span className={`text-xl font-black ${config.color} mb-3`}>
                   {amount !== null ? `${amount.toLocaleString()}৳` : "N/A"}
                 </span>
 
