@@ -6,67 +6,116 @@ export default async function LatestDonorsMarquee() {
   const donorResponse = await getDonors(1, 5);
   const donors = donorResponse.donors;
   return (
-    <section className="bg-[#F7FCFA] py-16 px-4 min-h-screen">
+    <section className="bg-[#F7FCFA] py-16 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-emerald-950 mb-3">
+          <h2 className="text-3xl lg:text-4xl font-bold text-emerald-950 mb-3">
             সর্বশেষ ডোনার লিস্ট
           </h2>
-          <p className="text-emerald-600 font-medium text-lg">
+          <p className="text-emerald-600 font-medium text-sm lg:text-base">
             যারা এগিয়ে এসেছেন সাহায্যের হাত বাড়িয়ে
           </p>
         </div>
 
-        {/* Vertical List Container */}
-        <div className="space-y-4">
-          {donors.map((donor, idx) => (
-            <div
-              key={idx}
-              className="flex items-center space-x-4 bg-white p-5 md:p-6 rounded-3xl shadow-[0_8px_30px_rgb(16,185,129,0.04)] border border-emerald-50 transition-all hover:shadow-md"
-            >
-              {/* Green Icon Circle */}
-              <div className="w-14 h-14 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-100">
-                {donor.name === "Anonymous" ? (
-                  <User size={24} />
-                ) : (
-                  <Heart size={24} fill="currentColor" />
-                )}
-              </div>
+        {/* Table Container */}
+        <div className="overflow-x-auto rounded-2xl border border-emerald-100 shadow-sm bg-white">
+          <table className="min-w-full divide-y divide-emerald-100">
+            <thead className="bg-emerald-50/70">
+              <tr>
+                <th
+                  scope="col"
+                  className="py-4 pl-6 pr-3 text-left text-sm font-semibold text-emerald-800 sm:pl-8"
+                >
+                  ডোনার
+                </th>
+                <th
+                  scope="col"
+                  className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                >
+                  সময়
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
+                >
+                  পরিমাণ
+                </th>
+              </tr>
+            </thead>
 
-              {/* Donor Name & Time */}
-              <div className="flex flex-col flex-grow">
-                <span className="font-bold text-emerald-900 text-xl">
-                  {donor.name}
-                </span>
-                <div className="flex items-center text-emerald-500/80 text-sm mt-1">
-                  <Clock size={14} className="mr-1.5" />
-                  <span> {moment(donor.date).fromNow()} </span>
-                </div>
-              </div>
+            <tbody className="divide-y divide-emerald-50 bg-white">
+              {donors.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={3}
+                    className="py-12 text-center text-emerald-600/70"
+                  >
+                    এখনো কোনো ডোনেশন আসেনি
+                  </td>
+                </tr>
+              ) : (
+                donors.map((donor, idx) => (
+                  <tr
+                    key={idx}
+                    className={`
+                      hover:bg-emerald-50/40 transition-colors
+                      ${idx === 0 ? "bg-emerald-50/30 font-medium" : ""}
+                    `}
+                  >
+                    {/* Donor Name + Icon */}
+                    <td className="whitespace-nowrap py-3 pl-6 pr-3 sm:pl-8">
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                            donor.name === "Anonymous"
+                              ? "bg-emerald-100 text-emerald-700"
+                              : "bg-emerald-500 text-white"
+                          }`}
+                        >
+                          {donor.name === "Anonymous" ? (
+                            <User size={20} />
+                          ) : (
+                            <Heart size={20} fill="currentColor" />
+                          )}
+                        </div>
+                        <div className="font-medium text-emerald-900">
+                          {donor.name}
+                          {idx === 0 && (
+                            <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+                              সর্বশেষ
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </td>
 
-              {/* Amount & Latest Badge */}
-              <div className="text-right flex flex-col items-end space-y-1">
-                <span className="font-black text-emerald-600 text-2xl">
-                  ৳{donor.amount.toLocaleString()}
-                </span>
-                {idx === 0 && (
-                  <span className="bg-emerald-100 text-emerald-700 text-[11px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                    সর্বশেষ
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
+                    {/* Time - hidden on mobile, or show below name if you want */}
+                    <td className="hidden whitespace-nowrap py-5 px-3 text-sm text-emerald-600 sm:table-cell">
+                      <div className="flex items-center gap-1.5">
+                        <Clock size={16} />
+                        {moment(donor.date).fromNow()}
+                      </div>
+                    </td>
+
+                    {/* Amount */}
+                    <td className="whitespace-nowrap py-5 pl-3 pr-6 text-right text-lg font-bold text-emerald-700 sm:pr-8">
+                      ৳{donor.amount.toLocaleString()}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
 
         {/* Footer Text */}
-        <div className="mt-12 text-center">
+        {/* <div className="mt-12 text-center">
           <p className="text-emerald-800/60 font-semibold text-base">
             মোট <span className="text-emerald-600 font-bold text-lg">৫+</span>{" "}
             জন ডোনার এই ক্যাম্পেইনে অংশ নিয়েছেন
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

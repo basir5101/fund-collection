@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Globe, HandHelping, Landmark, Smartphone, Wallet } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 
 export default function DonationStatus({ stats, event }) {
   // 1. Total Calculation
@@ -64,10 +65,10 @@ export default function DonationStatus({ stats, event }) {
     <section className="max-w-7xl mx-5 lg:mx-auto my-10 p-8 bg-green-100 rounded-[2.5rem] shadow-sm border border-emerald-50">
       {/* Header */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-green-800 mb-2">
+        <h2 className="text-3xl lg:text-4xl font-bold text-green-800 mb-2">
           ডোনেশন প্রগ্রেস
         </h2>
-        <p className="text-green-500 font-medium">
+        <p className="text-green-500 font-medium text-sm lg:text-base">
           আপনার সহযোগিতায় আমরা এগিয়ে যাচ্ছি
         </p>
       </div>
@@ -93,15 +94,22 @@ export default function DonationStatus({ stats, event }) {
       </div>
 
       {/* Main Progress Bar */}
-      <div className="relative w-full h-10 bg-gray-200/60 rounded-full overflow-hidden mb-12 shadow-inner">
+      <div className="relative w-full h-10 bg-gray-200 rounded-full overflow-hidden mb-12 shadow-inner">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${totalPercentage}%` }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="h-full bg-emerald-500 flex items-center justify-center text-white text-sm font-bold shadow-lg"
+          className="h-full bg-emerald-500 flex items-center justify-center  shadow-lg"
+        ></motion.div>
+        <span
+          className={twMerge(
+            "absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-sm font-bold",
+            totalPercentage > 70 && "text-white",
+            totalPercentage > 60 && "lg:text-white"
+          )}
         >
           {totalPercentage}% অর্জিত
-        </motion.div>
+        </span>
       </div>
 
       {/* Source Breakdown */}

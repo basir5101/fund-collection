@@ -86,7 +86,7 @@ const Donate = ({ onSuccess }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Currency Toggle */}
-          <div className="flex justify-center p-1 bg-slate-100 rounded-full w-48 mx-auto">
+          {/* <div className="flex justify-center p-1 bg-slate-100 rounded-full w-48 mx-auto">
             <button
               type="button"
               onClick={() => setCurrency("BDT")}
@@ -98,7 +98,7 @@ const Donate = ({ onSuccess }) => {
             >
               BDT (৳)
             </button>
-            {/* <button
+            <button
               type="button"
               onClick={() => setCurrency("USD")}
               className={`flex-1 py-1 rounded-full text-sm font-bold transition ${
@@ -108,8 +108,8 @@ const Donate = ({ onSuccess }) => {
               }`}
             >
               USD ($)
-            </button> */}
-          </div>
+            </button>
+          </div> */}
 
           <div className="space-y-4">
             <div>
