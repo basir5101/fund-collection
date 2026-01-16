@@ -36,3 +36,8 @@ export async function registerUser(formData) {
 
   redirect("/login");
 }
+
+
+export async function updateUser(formData) {
+  
+}
