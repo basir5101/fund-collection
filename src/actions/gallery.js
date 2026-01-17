@@ -3,24 +3,17 @@ import dbConnect from "@/lib/mongodb";
 import Gallery from "@/models/Gallery";
 import { revalidatePath } from "next/cache";
 
-export async function addGalleryItem(formData) {
+
+
+export async function addGalleryItem(data) {
   await dbConnect();
+  
+  await Gallery.create({
+    event: data.event,
+    image: data.image, // This is the Cloudinary secure_url
+  });
 
-  try {
-    const rawData = {
-      event: formData.get("event"),
-      image: formData.get("image"), // এটি হবে ইমেজ ইউআরএল (String)
-    };
-
-    if (!rawData.image) throw new Error("ইমেজ ইউআরএল প্রয়োজন");
-
-    await Gallery.create(rawData);
-    revalidatePath("/admin/gallery");
-    revalidatePath("/");
-    return { success: true, message: "ছবিটি গ্যালারিতে যোগ করা হয়েছে!" };
-  } catch (error) {
-    return { success: false, message: "ত্রুটি: " + error.message };
-  }
+  revalidatePath("/gallery");
 }
 
 export async function getGalleryItems(page = 1, limit = 6) {

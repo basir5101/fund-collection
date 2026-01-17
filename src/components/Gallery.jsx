@@ -2,9 +2,9 @@
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
 // import ProgressBar from '../components/ProgressBar';
-import { GALLERY_IMAGES } from "@/lib/constant";
 
-export default function Gallery({ homeContent }) {
+export default function GalleryGrid({ images }) {
+  images;
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-2 mb-8">
@@ -14,14 +14,14 @@ export default function Gallery({ homeContent }) {
         </h2>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {GALLERY_IMAGES.map((img, i) => (
+        {images.map((item, i) => (
           <motion.div
             key={i}
             whileHover={{ scale: 1.05 }}
             className="aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-md"
           >
             <img
-              src={img}
+              src={item.image}
               alt={`Gallery ${i}`}
               className="w-full h-full object-cover"
             />

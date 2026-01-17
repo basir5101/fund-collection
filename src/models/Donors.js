@@ -16,7 +16,7 @@ const DonorSchema = new mongoose.Schema({
   medium: {
     type: String,
     required: false,
-    enum: ["bkash", "nagad", "rocket", "bank", "website"],
+    enum: ["bkash", "nagad", "rocket", "bank", "website", "campaign"],
   },
   message: {
     type: String,

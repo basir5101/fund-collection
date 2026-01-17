@@ -1,28 +1,36 @@
 import { getDonors } from "@/actions/donors";
+import { auth } from "@/auth";
 import { ChevronLeft, ChevronRight, Clock, Heart } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import DeleteDonorButton from "./DeleteDonorButton";
 import DonorForm from "./DonorForm";
 
 export default async function DonorsPage({ searchParams }) {
+  const session = await auth();
+  if (!session) {
+    return redirect("/login");
+  }
+  console.log("session", session);
+  const role = session.user.role;
   const params = await searchParams;
   const page = parseInt(params.page) || 1;
   const { donors, totalPages, currentPage } = await getDonors(page, 5);
 
   return (
-    <div className="min-h-screen bg-[#F7FCFA] py-12 px-4">
+    <div className="min-h-screen bg-[#F7FCFA] py-2 px-4">
       <div className="max-w-4xl mx-auto">
         <DonorForm />
 
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-emerald-950">ডোনার লিস্ট</h2>
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-green-800">ডোনার লিস্ট</h2>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-1">
           {donors.map((donor, idx) => (
             <div
               key={donor._id}
-              className="group flex items-center space-x-4 bg-white p-6 rounded-3xl border border-emerald-50 shadow-sm transition-all hover:shadow-md"
+              className="group flex items-center space-x-4 bg-white p-2 rounded-xl border border-emerald-50 shadow-sm transition-all hover:shadow-md"
             >
               {/* Icon */}
               <div className="w-14 h-14 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-100">
@@ -54,7 +62,7 @@ export default async function DonorsPage({ searchParams }) {
                 </div>
 
                 {/* ডিলিট বাটন এখানে যুক্ত করা হয়েছে */}
-                <DeleteDonorButton id={donor._id} />
+                {role === "admin" && <DeleteDonorButton id={donor._id} />}
               </div>
             </div>
           ))}

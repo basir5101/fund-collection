@@ -1,5 +1,5 @@
 import DonationWrapper from "@/components/DonationWrapper";
-import Gallery from "@/components/Gallery";
+import GalleryWrapper from "@/components/GalleryWrapper";
 import Hero from "@/components/Hero";
 import LatestDonorsMarquee from "@/components/LatestDonorsMarquee";
 import { Loader } from "@/components/Loader";
@@ -16,7 +16,9 @@ export default async function page() {
       </Suspense>
       <LatestDonorsMarquee donors={MOCK_DONORS} />
       <WhyCampaign />
-      <Gallery />
+      <Suspense fallback={<Loader />}>
+        <GalleryWrapper />
+      </Suspense>
     </div>
   );
 }

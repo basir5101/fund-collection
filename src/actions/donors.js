@@ -95,3 +95,40 @@ export async function deleteDonor(id) {
     return { success: false, message: "মুছে ফেলতে ব্যর্থ: " + error.message };
   }
 }
+
+export async function donationsByMedium() {
+  await dbConnect();
+  try {
+    const stats = await Donor.aggregate([
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+            medium: "$medium",
+          },
+          totalAmount: { $sum: "$amount" },
+        },
+      },
+      { $sort: { "_id.date": 1 } },
+    ]);
+
+    // Format data for ApexCharts: series: [{ name: 'bkash', data: [10, 20...] }]
+    const mediums = ["bkash", "nagad", "rocket", "bank", "website", "campaign"];
+    const uniqueDates = [...new Set(stats.map((item) => item._id.date))];
+
+    const series = mediums.map((m) => ({
+      name: m.charAt(0).toUpperCase() + m.slice(1),
+      data: uniqueDates.map((date) => {
+        const found = stats.find(
+          (s) => s._id.date === date && s._id.medium === m,
+        );
+        return found ? found.totalAmount : 0; // Return 0 if no donation for that medium on that day
+      }),
+    }));
+
+    return { success: true, categories: uniqueDates, series };
+  } catch (error) {
+    console.error("Aggregation Error:", error);
+    return { success: false, message: "হিসাব বের করতে সমস্যা হয়েছে" };
+  }
+}

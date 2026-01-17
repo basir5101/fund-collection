@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import AdminDropdown from "./AdminDropdown";
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,37 +78,7 @@ const Navbar = ({ user }) => {
                 এখনই দান করুন
               </Link>
               {/* Auth Links */}
-              <div>
-                {user ? (
-                  <div className="flex items-center gap-6">
-                    <Link
-                      href="/profile"
-                      className="flex items-center gap-1 text-slate-600 hover:text-green-500 transition-colors duration-200"
-                    >
-                      <User size={18} />
-                      <span>{user.email.split("@")[0]}</span>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setIsOpen(false);
-                      }}
-                      className="text-left text-red-500 hover:text-red-600 transition-colors duration-200 font-medium"
-                    >
-                      <span className="flex gap-2 items-center">
-                        <LogOutIcon size={18} /> লগ আউট
-                      </span>
-                    </button>
-                  </div>
-                ) : (
-                  <Link
-                    href="/login"
-                    className="text-green-500 hover:text-green-700 transition-colors duration-200"
-                  >
-                    লগইন
-                  </Link>
-                )}
-              </div>
+              <AdminDropdown user={user} signOut={signOut} />
             </div>
           </nav>
 

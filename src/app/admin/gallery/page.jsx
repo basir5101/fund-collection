@@ -13,47 +13,34 @@ export default async function GalleryPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-[#F7FCFA] py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-emerald-950 mb-3">
-            ফটো গ্যালারি
-          </h1>
-          <p className="text-emerald-600 font-medium">
-            আমাদের ক্যাম্পেইনের বিশেষ মুহূর্তগুলো
-          </p>
-        </div>
-
         {/* Form to Add Image */}
-        <div className="max-w-3xl mx-auto">
-          <GalleryForm />
-        </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
           {items.map((item) => (
             <div
               key={item._id}
-              className="group relative bg-white rounded-[2rem] overflow-hidden border border-emerald-50 shadow-sm hover:shadow-xl transition-all duration-300"
+              className="group relative bg-white rounded-lg overflow-hidden border border-emerald-50 shadow-sm hover:shadow-xl transition-all duration-300"
             >
               {/* Delete Button - এটি ছবির ওপর দেখাবে */}
               <DeleteButton id={item._id} />
 
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-32 overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.event}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 {/* Gradient এবং Date Overlay আগের মতোই থাকবে */}
-                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div className="absolute inset-0 bg-linear-to-t from-emerald-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <p className="text-white font-medium text-sm">
                     {new Date(item.date).toLocaleDateString("bn-BD")}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-emerald-900 truncate">
+              <div className="px-1 py-3 text-center">
+                <h3 className="text-sm  text-emerald-900 truncate">
                   {item.event || "ক্যাম্পেইন মুহূর্ত"}
                 </h3>
               </div>
@@ -91,6 +78,11 @@ export default async function GalleryPage({ searchParams }) {
             </Link>
           </div>
         )}
+      </div>
+
+      <div className="max-w-3xl mx-auto mt-10">
+        <h1 className="text-3xl text-green-700 mb-3">Add Image</h1>
+        <GalleryForm />
       </div>
     </div>
   );
