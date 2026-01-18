@@ -5,14 +5,21 @@ import { registerUser } from "@/actions/user";
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-[70vh] flex items-center justify-center bg-gray-50">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6">Create Account</h1>
         <form action={registerUser} className="space-y-4">
           <input
+            name="name"
+            type="name"
+            placeholder="Your Name"
+            required
+            className="w-full p-3 border rounded-lg"
+          />
+          <input
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="Your Email"
             required
             className="w-full p-3 border rounded-lg"
           />

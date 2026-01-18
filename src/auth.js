@@ -7,6 +7,7 @@ import Credentials from "next-auth/providers/credentials";
 import dbConnect from "./lib/mongodb";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET,
   providers: [
     Credentials({
       async authorize(credentials) {
@@ -20,7 +21,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (!user) {
             console.log(
               "Login Failed: No user found with email:",
-              credentials.email
+              credentials.email,
             );
             return null; // Triggers CredentialsSignin
           }
@@ -28,13 +29,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           const isMatch = await bcrypt.compare(
             credentials.password,
-            user.password
+            user.password,
           );
 
           if (!isMatch) {
             console.log(
               "Login Failed: Password does not match for:",
-              credentials.email
+              credentials.email,
             );
             return null; // Triggers CredentialsSignin
           }
