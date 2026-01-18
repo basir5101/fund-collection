@@ -1,21 +1,70 @@
 import { getDonors } from "@/actions/donors";
 import { auth } from "@/auth";
-import { ChevronLeft, ChevronRight, Clock, Heart } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Globe,
+  Landmark,
+} from "lucide-react";
+import moment from "moment";
+import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteDonorButton from "./DeleteDonorButton";
 import DonorForm from "./DonorForm";
+import bkashLogo from "@/assets/icons/bkash.png";
+import nagadLogo from "@/assets/icons/nagad.png";
 
 export default async function DonorsPage({ searchParams }) {
   const session = await auth();
   if (!session) {
     return redirect("/login");
   }
-  console.log("session", session);
   const role = session.user.role;
   const params = await searchParams;
   const page = parseInt(params.page) || 1;
   const { donors, totalPages, currentPage } = await getDonors(page, 5);
+
+  // Define payment mediums and their display info
+  const paymentMethods = {
+    bkash: {
+      name: "বিকাশ",
+      logo: bkashLogo,
+      color: "bg-pink-100 text-pink-700 border-pink-200",
+    },
+    nagad: {
+      name: "নগদ",
+      logo: nagadLogo,
+      color: "bg-orange-100 text-orange-700 border-orange-200",
+    },
+    // rocket: {
+    //   name: "রকেট",
+    //   logo: rocketLogo, // ← make sure this exists, or use fallback
+    //   color: "bg-purple-100 text-purple-700 border-purple-200",
+    // },
+    bank: {
+      name: "ব্যাংক ট্রান্সফার",
+      logo: null, // We'll use icon instead
+      color: "bg-blue-100 text-blue-700 border-blue-200",
+    },
+    website: {
+      name: "ওয়েবসাইট",
+      logo: null,
+      color: "bg-teal-100 text-teal-700 border-teal-200",
+    },
+  };
+
+  // Helper to get method display info
+  const getMethodInfo = (medium) => {
+    return (
+      paymentMethods[medium?.toLowerCase()] || {
+        name: medium || "অজানা",
+        logo: null,
+        color: "bg-gray-100 text-gray-700 border-gray-200",
+      }
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#F7FCFA] py-2 px-4">
@@ -27,45 +76,146 @@ export default async function DonorsPage({ searchParams }) {
         </div>
 
         <div className="space-y-1">
-          {donors.map((donor, idx) => (
-            <div
-              key={donor._id}
-              className="group flex items-center space-x-4 bg-white p-2 rounded-xl border border-emerald-50 shadow-sm transition-all hover:shadow-md"
-            >
-              {/* Icon */}
-              <div className="w-14 h-14 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-100">
-                <Heart size={24} fill="currentColor" />
-              </div>
+          {/* Donors List */}
+          <div className="overflow-x-auto rounded-2xl border border-emerald-100 shadow-sm bg-white">
+            <table className="min-w-full divide-y divide-emerald-100">
+              <thead className="bg-emerald-50/70">
+                <tr>
+                  <th
+                    scope="col"
+                    className="py-4 pl-6 pr-3 text-left text-sm font-semibold text-emerald-800 sm:pl-8"
+                  >
+                    ডোনার
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                  >
+                    সময়
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                  >
+                    ট্রাঞ্জেকশন ID
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
+                  >
+                    পরিমাণ
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
+                  >
+                    অ্যাকশন
+                  </th>
+                </tr>
+              </thead>
 
-              {/* Donor Info */}
-              <div className="flex flex-col flex-grow">
-                <span className="font-bold text-emerald-900 text-xl">
-                  {donor.name}
-                </span>
-                <div className="flex items-center text-emerald-500/80 text-sm mt-1">
-                  <Clock size={14} className="mr-1.5" />
-                  <span>{donor.medium} এর মাধ্যমে</span>
-                </div>
-              </div>
+              <tbody className="divide-y divide-emerald-50 bg-white">
+                {donors.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={3}
+                      className="py-12 text-center text-emerald-600/70"
+                    >
+                      এখনো কোনো ডোনেশন আসেনি
+                    </td>
+                  </tr>
+                ) : (
+                  donors.map((donor, idx) => {
+                    const methodInfo = getMethodInfo(donor.medium);
+                    return (
+                      <tr
+                        key={idx}
+                        className={`
+                      hover:bg-emerald-50/40 transition-colors
+                      ${idx === 0 ? "bg-emerald-50/30 font-medium" : ""}
+                    `}
+                      >
+                        {/* Donor Name + Icon */}
+                        <td className="whitespace-nowrap py-3 pl-6 pr-3 sm:pl-8">
+                          <div className="flex items-center gap-3">
+                            <div className="font-medium text-emerald-900">
+                              {donor.name}
+                              {idx === 0 && (
+                                <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+                                  সর্বশেষ
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
 
-              {/* Amount and Delete Action */}
-              <div className="flex items-center space-x-4">
-                <div className="text-right">
-                  <span className="font-black text-emerald-600 text-2xl">
-                    ৳{donor.amount.toLocaleString()}
-                  </span>
-                  {idx === 0 && currentPage === 1 && (
-                    <span className="block bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase text-center mt-1">
-                      সর্বশেষ
-                    </span>
-                  )}
-                </div>
+                        {/* Time - hidden on mobile, or show below name if you want */}
+                        <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                          <div className="flex items-center gap-1.5">
+                            <Clock size={16} />
+                            {moment(donor.date).fromNow()}
+                          </div>
+                        </td>
+                        <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                          <div className="flex items-center gap-2">
+                            {methodInfo.logo ? (
+                              <div
+                                className={`h-9 w-9 p-1 rounded-md border ${methodInfo.color}`}
+                              >
+                                <Image
+                                  src={methodInfo.logo}
+                                  width={28}
+                                  height={28}
+                                  alt={`${methodInfo.name} logo`}
+                                  className="w-full h-full"
+                                />
+                              </div>
+                            ) : (
+                              <div
+                                className={`flex h-9 w-9 items-center justify-center rounded-md border ${methodInfo.color}`}
+                              >
+                                {donor.medium === "bank" ? (
+                                  <Landmark size={20} />
+                                ) : donor.medium === "website" ? (
+                                  <Globe size={20} />
+                                ) : (
+                                  <span className="text-xs font-bold">
+                                    {methodInfo.name?.charAt(0)}
+                                  </span>
+                                )}
+                              </div>
+                            )}
 
-                {/* ডিলিট বাটন এখানে যুক্ত করা হয়েছে */}
-                {role === "admin" && <DeleteDonorButton id={donor._id} />}
-              </div>
-            </div>
-          ))}
+                            <div className="flex flex-col">
+                              {/* <span className="font-medium text-emerald-800">
+                              {methodInfo.name}
+                            </span> */}
+                              {donor.transactionId && (
+                                <span className="text-[10px] font-mono text-gray-500">
+                                  {donor.transactionId}
+                                  {/* fjh48y3fhu455c3ddw */}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Amount */}
+                        <td className="whitespace-nowrap py-3 pl-3 pr-6 text-right font-bold text-emerald-700 sm:pr-8">
+                          ৳{donor.amount.toLocaleString()}
+                        </td>
+                        <td className="whitespace-nowrap py-4 pr-6 text-right text-sm font-medium">
+                          {role === "admin" && (
+                            <DeleteDonorButton id={donor._id} />
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Pagination Controls */}
