@@ -126,10 +126,13 @@ const Navbar = ({ user }) => {
                 <div className="flex flex-col gap-4">
                   <Link
                     href="/profile"
-                    className="flex items-center gap-2 text-slate-600 hover:text-green-500 transition-colors duration-200"
+                    className="flex items-center gap-2 text-green-500 transition-colors duration-200"
                     onClick={() => setIsOpen(false)}
                   >
-                    <User size={18} />
+                    <span className="bg-purple-600 h-8 w-8 font-bold text-white p-2 flex items-center justify-center rounded-full capitalize">
+                      {/* <User size={18} /> */}
+                      {user ? user.email[0] : "A"}
+                    </span>
                     <span>{user.email.split("@")[0]}</span>
                   </Link>
                   <button

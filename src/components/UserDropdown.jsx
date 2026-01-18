@@ -31,7 +31,10 @@ const UserDropdown = ({ user, signOut }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex cursor-pointer items-center gap-1 text-slate-600 hover:text-green-500 transition-colors duration-200 font-medium"
       >
-        <User size={18} />
+        <span className="bg-purple-600 h-8 w-8 font-bold text-white p-2 flex items-center justify-center rounded-full capitalize">
+          {/* <User size={18} /> */}
+          {user ? user.email[0] : "A"}
+        </span>
         <span>{user ? user.email.split("@")[0] : "Admin"}</span>
         <ChevronDown
           size={14}

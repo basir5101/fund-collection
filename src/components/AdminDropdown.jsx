@@ -1,6 +1,7 @@
 import {
   Calendar,
   ChevronDown,
+  LayoutDashboard,
   LayoutGrid,
   LogOutIcon,
   User,
@@ -31,7 +32,10 @@ const AdminDropdown = ({ user, signOut }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex cursor-pointer items-center gap-1 text-slate-600 hover:text-green-500 transition-colors duration-200 font-medium"
       >
-        <User size={18} />
+        <span className="bg-purple-600 h-8 w-8 font-bold text-white p-2 flex items-center justify-center rounded-full capitalize">
+          {/* <User size={18} /> */}
+          {user ? user.email[0] : "A"}
+        </span>
         <span>{user ? user.email.split("@")[0] : "Admin"}</span>
         <ChevronDown
           size={14}
@@ -52,6 +56,13 @@ const AdminDropdown = ({ user, signOut }) => {
                   onClick={() => setIsOpen(false)}
                 >
                   Profile
+                </Link>
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <LayoutDashboard size={16} /> Dashboard
                 </Link>
                 <Link
                   href="/admin/gallery"
