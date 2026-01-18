@@ -6,11 +6,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AdminDropdown from "./AdminDropdown";
+import UserDropdown from "./UserDropdown";
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const path = usePathname();
+
+  const { role: userRole } = user;
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -78,7 +81,11 @@ const Navbar = ({ user }) => {
                 এখনই দান করুন
               </Link>
               {/* Auth Links */}
-              <AdminDropdown user={user} signOut={signOut} />
+              {userRole == "admin" ? (
+                <AdminDropdown user={user} signOut={signOut} />
+              ) : (
+                <UserDropdown user={user} signOut={signOut} />
+              )}
             </div>
           </nav>
 

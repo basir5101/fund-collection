@@ -6,6 +6,7 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
 
 export async function registerUser(formData) {
   const name = formData.get("name");
@@ -151,4 +152,41 @@ export async function deleteUser(id) {
     console.error("Delete user error:", err);
     return { success: false, error: "Failed to delete user" };
   }
+}
+
+export async function changePassword(formData) {
+  const session = await auth();
+  if (!session?.user?.email) {
+    return { success: false, error: "অনুমতি নেই — লগইন করুন" };
+  }
+
+  const { userId, currentPassword, newPassword } = formData;
+
+  if (!userId || !currentPassword || !newPassword) {
+    return { success: false, error: "সব তথ্য পূরণ করুন" };
+  }
+
+  await dbConnect();
+
+  const user = await User.findById(userId);
+  if (!user || user.email !== session.user.email) {
+    return { success: false, error: "ব্যবহারকারী পাওয়া যায়নি বা অনুমতি নেই" };
+  }
+
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return { success: false, error: "বর্তমান পাসওয়ার্ড সঠিক নয়" };
+  }
+
+  if (newPassword.length < 6) {
+    return {
+      success: false,
+      error: "নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে",
+    };
+  }
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  await user.save();
+
+  return { success: true, message: "পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে" };
 }
