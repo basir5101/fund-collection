@@ -6,11 +6,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AdminDropdown from "./AdminDropdown";
+import UserDropdown from "./UserDropdown";
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const path = usePathname();
+
+  const { role: userRole } = user;
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -78,7 +81,11 @@ const Navbar = ({ user }) => {
                 এখনই দান করুন
               </Link>
               {/* Auth Links */}
-              <AdminDropdown user={user} signOut={signOut} />
+              {userRole == "admin" ? (
+                <AdminDropdown user={user} signOut={signOut} />
+              ) : (
+                <UserDropdown user={user} signOut={signOut} />
+              )}
             </div>
           </nav>
 
@@ -119,10 +126,13 @@ const Navbar = ({ user }) => {
                 <div className="flex flex-col gap-4">
                   <Link
                     href="/profile"
-                    className="flex items-center gap-2 text-slate-600 hover:text-green-500 transition-colors duration-200"
+                    className="flex items-center gap-2 text-green-500 transition-colors duration-200"
                     onClick={() => setIsOpen(false)}
                   >
-                    <User size={18} />
+                    <span className="bg-purple-600 h-8 w-8 font-bold text-white p-2 flex items-center justify-center rounded-full capitalize">
+                      {/* <User size={18} /> */}
+                      {user ? user.email[0] : "A"}
+                    </span>
                     <span>{user.email.split("@")[0]}</span>
                   </Link>
                   <button

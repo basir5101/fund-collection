@@ -1,7 +1,6 @@
 import {
   Calendar,
   ChevronDown,
-  LayoutDashboard,
   LayoutGrid,
   LogOutIcon,
   User,
@@ -10,7 +9,7 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const AdminDropdown = ({ user, signOut }) => {
+const UserDropdown = ({ user, signOut }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -57,34 +56,6 @@ const AdminDropdown = ({ user, signOut }) => {
                 >
                   Profile
                 </Link>
-                <Link
-                  href="/admin"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <LayoutDashboard size={16} /> Dashboard
-                </Link>
-                <Link
-                  href="/admin/gallery"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <LayoutGrid size={16} /> Gallery
-                </Link>
-                <Link
-                  href="/admin/donors"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Users size={16} /> Donors
-                </Link>
-                <Link
-                  href="/admin/event"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Calendar size={16} /> Event
-                </Link>
                 <hr className="my-1 border-gray-200" />
                 <button
                   onClick={() => {
@@ -113,4 +84,4 @@ const AdminDropdown = ({ user, signOut }) => {
   );
 };
 
-export default AdminDropdown;
+export default UserDropdown;
