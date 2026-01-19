@@ -1,19 +1,21 @@
 "use client";
 
-import { Heart, LogOutIcon, Menu, User, X } from "lucide-react";
+import { Heart, LogOutIcon, Menu, X } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AdminDropdown from "./AdminDropdown";
-import UserDropdown from "./UserDropdown";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user = null }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const path = usePathname();
+  let userRole = null;
 
-  const { role: userRole } = user;
+  if (user && user.role) {
+    userRole = user.role;
+  }
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -81,11 +83,7 @@ const Navbar = ({ user }) => {
                 এখনই দান করুন
               </Link>
               {/* Auth Links */}
-              {userRole == "admin" ? (
-                <AdminDropdown user={user} signOut={signOut} />
-              ) : (
-                <UserDropdown user={user} signOut={signOut} />
-              )}
+              {user && <AdminDropdown user={user} signOut={signOut} />}
             </div>
           </nav>
 

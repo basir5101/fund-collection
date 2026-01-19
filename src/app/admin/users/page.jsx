@@ -10,6 +10,10 @@ export default async function UsersPage({ searchParams }) {
     redirect("/login");
   }
 
+  if (session.user.role !== "admin") {
+    redirect("/admin");
+  }
+
   // Optional: add admin check if needed
   // if (session.user.role !== "admin") redirect("/dashboard");
 

@@ -1,10 +1,11 @@
 import {
   Calendar,
   ChevronDown,
+  HandCoins,
   LayoutDashboard,
   LayoutGrid,
   LogOutIcon,
-  User,
+  User2,
   Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -55,8 +56,17 @@ const AdminDropdown = ({ user, signOut }) => {
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setIsOpen(false)}
                 >
-                  Profile
+                  <User2 size={16} /> Profile
                 </Link>
+                {user?.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Users size={16} /> Users
+                  </Link>
+                )}
                 <Link
                   href="/admin"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -76,7 +86,7 @@ const AdminDropdown = ({ user, signOut }) => {
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setIsOpen(false)}
                 >
-                  <Users size={16} /> Donors
+                  <HandCoins size={16} /> Donors
                 </Link>
                 <Link
                   href="/admin/event"

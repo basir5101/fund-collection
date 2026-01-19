@@ -1,6 +1,12 @@
 import { auth } from "@/auth";
 import DonationChart from "@/components/DonationChart";
-import { ChevronRight, Clock, GalleryHorizontal, Heart } from "lucide-react";
+import {
+  ChevronRight,
+  Clock,
+  GalleryHorizontal,
+  Heart,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -32,6 +38,18 @@ export default async function NavigationPage() {
       color: "text-teal-600",
       bg: "bg-emerald-50",
     },
+    ...(session.user.role === "admin"
+      ? [
+          {
+            href: "/admin/users",
+            label: "ব্যবহারকারীদের তালিকা",
+            description: "সবাই যারা সাহায্যের হাত বাড়িয়ে দিয়েছেন",
+            icon: <Users size={28} />,
+            color: "text-emerald-600",
+            bg: "bg-emerald-50",
+          },
+        ]
+      : []),
   ];
 
   return (
