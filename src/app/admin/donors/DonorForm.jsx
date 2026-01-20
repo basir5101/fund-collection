@@ -31,18 +31,14 @@ export default function DonorForm() {
       >
         <input
           name="name"
-          placeholder="ডোনারের নাম"
+          placeholder="ডোনারের নাম (ঐচ্ছিক)"
           className={inputStyle}
-          required
         />
         <input
-          name="amount"
-          type="number"
-          placeholder="টাকার পরিমাণ (৳)"
+          name="transactionId"
+          placeholder="ট্রানজেকশন আইডি (ঐচ্ছিক)"
           className={inputStyle}
-          required
         />
-
         <select name="medium" className={inputStyle} required>
           <option value="">পেমেন্ট মিডিয়াম বেছে নিন</option>
           <option value="campaign">Campaign</option>
@@ -51,13 +47,13 @@ export default function DonorForm() {
           <option value="rocket">Rocket</option>
           <option value="bank">Bank</option>
         </select>
-
         <input
-          name="transactionId"
-          placeholder="ট্রানজেকশন আইডি (ঐচ্ছিক)"
+          name="amount"
+          type="number"
+          placeholder="টাকার পরিমাণ (৳)"
           className={inputStyle}
+          required
         />
-
         <div className="md:col-span-2">
           <textarea
             name="message"
@@ -66,7 +62,6 @@ export default function DonorForm() {
             className={inputStyle}
           ></textarea>
         </div>
-
         <button
           disabled={loading}
           className="md:col-span-2 flex w-32 justify-center  bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-md transition-all disabled:bg-green-300"
