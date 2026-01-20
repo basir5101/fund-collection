@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink, Heart } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -77,12 +78,29 @@ const Donate = ({ onSuccess }) => {
         animate={{ opacity: 1, scale: 1 }}
         className="bg-white rounded-3xl shadow-2xl p-8 border border-slate-100"
       >
-        <h2 className="text-3xl font-bold text-center text-slate-800 mb-2">
-          সহযোগিতা করুন
-        </h2>
-        <p className="text-center text-slate-500 mb-8">
-          আপনার সামান্য সাহায্য অনেক বড় ভূমিকা রাখবে
-        </p>
+        {/* Victim emotional summary – right here above the title */}
+        <div className="mb-7 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-3 flex items-center justify-center gap-2">
+            <Heart className="text-green-500" fill="currentColor" size={32} />
+            রাহিমকে সহযোগিতা করুন
+          </h2>
+
+          <div className="max-w-xl mx-auto">
+            <p className="text-sm text-gray-700 leading-relaxed mb-4">
+              ছোট্ট রাহিম গত ৩ মাস ধরে ক্যান্সারের সাথে লড়াই করছে। হঠাৎ জ্বর,
+              দুর্বলতা আর শরীরে দাগ দেখা দিলে ডাক্তার জানান তার লিউকেমিয়া
+              হয়েছে। বাবা রিকশাচালক, পরিবারের পক্ষে চিকিৎসার খরচ চালানো খুব কঠিন
+              হয়ে পড়েছে। আপনার সাহায্যই তার জীবনের আশা হতে পারে।
+            </p>
+
+            <Link
+              href={`/victim/1`}
+              className="inline-flex items-center gap-1.5 text-green-600 hover:text-green-800 font-semibold hover:underline"
+            >
+              বিস্তারিত গল্প ও ছবি দেখুন <ExternalLink size={16} />
+            </Link>
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Currency Toggle */}
