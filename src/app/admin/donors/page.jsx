@@ -15,6 +15,10 @@ import DeleteDonorButton from "./DeleteDonorButton";
 import DonorForm from "./DonorForm";
 import bkashLogo from "@/assets/icons/bkash.png";
 import nagadLogo from "@/assets/icons/nagad.png";
+import rocketLogo from "@/assets/icons/rocket.png";
+import helpLogo from "@/assets/icons/help.png";
+import bankLogo from "@/assets/icons/bank.png";
+import websiteLogo from "@/assets/icons/website.png";
 
 export default async function DonorsPage({ searchParams }) {
   const session = await auth();
@@ -38,20 +42,25 @@ export default async function DonorsPage({ searchParams }) {
       logo: nagadLogo,
       color: "bg-orange-100 text-orange-700 border-orange-200",
     },
-    // rocket: {
-    //   name: "রকেট",
-    //   logo: rocketLogo, // ← make sure this exists, or use fallback
-    //   color: "bg-purple-100 text-purple-700 border-purple-200",
-    // },
+    rocket: {
+      name: "রকেট",
+      logo: rocketLogo,
+      color: "bg-purple-100 text-purple-700 border-purple-200",
+    },
     bank: {
       name: "ব্যাংক ট্রান্সফার",
-      logo: null, // We'll use icon instead
+      logo: bankLogo,
       color: "bg-blue-100 text-blue-700 border-blue-200",
     },
     website: {
       name: "ওয়েবসাইট",
-      logo: null,
+      logo: websiteLogo,
       color: "bg-teal-100 text-teal-700 border-teal-200",
+    },
+    campaign: {
+      name: "ক্যাম্পেইন",
+      logo: helpLogo,
+      color: "bg-yellow-100 text-yellow-700 border-yellow-200",
     },
   };
 
