@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const DonorSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   amount: {
     type: Number,
@@ -11,7 +10,6 @@ const DonorSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    required: false,
   },
   medium: {
     type: String,
@@ -20,11 +18,9 @@ const DonorSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: false,
   },
   transactionId: {
     type: String,
-    required: false,
   },
   date: {
     type: Date,
