@@ -11,7 +11,6 @@ const DonationLineChart = () => {
 
   useEffect(() => {
     donationsByMedium().then((data) => {
-      console.log("data", data);
       setChartData(data);
       setLoading(false);
     });

@@ -46,7 +46,7 @@ const AdminDropdown = ({ user, signOut }) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute -right-3 top-7 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-green-200 ring-opacity-5 z-50">
+        <div className="absolute lg:-right-3 left-10 top-7 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-green-200 ring-opacity-5 z-50">
           <div className="py-">
             {user ? (
               <>
@@ -58,15 +58,6 @@ const AdminDropdown = ({ user, signOut }) => {
                 >
                   <User2 size={16} /> Profile
                 </Link>
-                {user?.role === "admin" && (
-                  <Link
-                    href="/admin"
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Users size={16} /> Users
-                  </Link>
-                )}
                 <Link
                   href="/admin"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -74,6 +65,16 @@ const AdminDropdown = ({ user, signOut }) => {
                 >
                   <LayoutDashboard size={16} /> Dashboard
                 </Link>
+
+                {user?.role === "admin" && (
+                  <Link
+                    href="/users"
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Users size={16} /> Users
+                  </Link>
+                )}
                 <Link
                   href="/admin/gallery"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

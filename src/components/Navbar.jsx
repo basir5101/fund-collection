@@ -1,7 +1,8 @@
 "use client";
 
-import { Heart, LogOutIcon, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -52,10 +53,13 @@ const Navbar = ({ user = null }) => {
               href={path.includes("admin") ? "/admin" : "/"}
               className="flex items-center gap-2"
             >
-              <Heart className="text-green-500 fill-green-500" size={28} />
-              <span className="text-xl font-bold text-slate-800">
-                ক্যান্সার জয়ী
-              </span>
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={100}
+                height={20}
+                // className="w-10 h-10"
+              />
             </Link>
           </div>
 
@@ -119,41 +123,14 @@ const Navbar = ({ user = null }) => {
               >
                 দাতাদের তালিকা
               </Link>
+              <Link
+                href="/donate"
+                className="bg-green-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-green-600 transition-all duration-200 shadow-lg shadow-green-200/50"
+              >
+                এখনই দান করুন
+              </Link>
 
-              {user ? (
-                <div className="flex flex-col gap-4">
-                  <Link
-                    href="/profile"
-                    className="flex items-center gap-2 text-green-500 transition-colors duration-200"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span className="bg-purple-600 h-8 w-8 font-bold text-white p-2 flex items-center justify-center rounded-full capitalize">
-                      {/* <User size={18} /> */}
-                      {user ? user.email[0] : "A"}
-                    </span>
-                    <span>{user.email.split("@")[0]}</span>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      signOut();
-                      setIsOpen(false);
-                    }}
-                    className="text-left text-red-500 hover:text-red-600 transition-colors duration-200 font-medium"
-                  >
-                    <span className="flex gap-2 items-center">
-                      <LogOutIcon size={18} /> লগ আউট
-                    </span>
-                  </button>
-                </div>
-              ) : (
-                <Link
-                  href="/login"
-                  className="text-green-500 hover:text-green-700 transition-colors duration-200 text-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  লগইন
-                </Link>
-              )}
+              {user && <AdminDropdown user={user} signOut={signOut} />}
             </div>
           </div>
         )}

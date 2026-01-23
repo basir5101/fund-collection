@@ -1,4 +1,11 @@
 import { getDonors } from "@/actions/donors";
+import SearchDonors from "@/app/donors/SearchDonors";
+import bankLogo from "@/assets/icons/bank.png";
+import bkashLogo from "@/assets/icons/bkash.png";
+import helpLogo from "@/assets/icons/help.png";
+import nagadLogo from "@/assets/icons/nagad.png";
+import rocketLogo from "@/assets/icons/rocket.png";
+import websiteLogo from "@/assets/icons/website.png";
 import { auth } from "@/auth";
 import {
   ChevronLeft,
@@ -13,12 +20,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteDonorButton from "./DeleteDonorButton";
 import DonorForm from "./DonorForm";
-import bkashLogo from "@/assets/icons/bkash.png";
-import nagadLogo from "@/assets/icons/nagad.png";
-import rocketLogo from "@/assets/icons/rocket.png";
-import helpLogo from "@/assets/icons/help.png";
-import bankLogo from "@/assets/icons/bank.png";
-import websiteLogo from "@/assets/icons/website.png";
 
 export default async function DonorsPage({ searchParams }) {
   const session = await auth();
@@ -28,7 +29,9 @@ export default async function DonorsPage({ searchParams }) {
   const role = session.user.role;
   const params = await searchParams;
   const page = parseInt(params.page) || 1;
-  const { donors, totalPages, currentPage } = await getDonors(page, 5);
+  const search = params.search || "";
+
+  const { donors, totalPages, currentPage } = await getDonors(page, 30, search);
 
   // Define payment mediums and their display info
   const paymentMethods = {
@@ -83,6 +86,7 @@ export default async function DonorsPage({ searchParams }) {
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-green-800">ডোনার লিস্ট</h2>
         </div>
+        <SearchDonors />
 
         <div className="space-y-1">
           {/* Donors List */}
@@ -96,23 +100,30 @@ export default async function DonorsPage({ searchParams }) {
                   >
                     ডোনার
                   </th>
+
                   <th
                     scope="col"
-                    className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                    className="sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
                   >
-                    সময়
+                    Method
                   </th>
                   <th
                     scope="col"
-                    className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                    className="sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
                   >
-                    ট্রাঞ্জেকশন ID
+                    TNX_ID
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
                   >
                     পরিমাণ
+                  </th>
+                  <th
+                    scope="col"
+                    className="sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                  >
+                    সময়
                   </th>
                   <th
                     scope="col"
@@ -148,7 +159,7 @@ export default async function DonorsPage({ searchParams }) {
                         <td className="whitespace-nowrap py-3 pl-6 pr-3 sm:pl-8">
                           <div className="flex items-center gap-3">
                             <div className="font-medium text-emerald-900">
-                              {donor.name}
+                              {donor.name || "বেনামী"}
                               {idx === 0 && (
                                 <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
                                   সর্বশেষ
@@ -158,14 +169,7 @@ export default async function DonorsPage({ searchParams }) {
                           </div>
                         </td>
 
-                        {/* Time - hidden on mobile, or show below name if you want */}
-                        <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
-                          <div className="flex items-center gap-1.5">
-                            <Clock size={16} />
-                            {moment(donor.date).fromNow()}
-                          </div>
-                        </td>
-                        <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                        <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
                           <div className="flex items-center gap-2">
                             {methodInfo.logo ? (
                               <div
@@ -194,24 +198,23 @@ export default async function DonorsPage({ searchParams }) {
                                 )}
                               </div>
                             )}
-
-                            <div className="flex flex-col">
-                              {/* <span className="font-medium text-emerald-800">
-                              {methodInfo.name}
-                            </span> */}
-                              {donor.transactionId && (
-                                <span className="text-[10px] font-mono text-gray-500">
-                                  {donor.transactionId}
-                                  {/* fjh48y3fhu455c3ddw */}
-                                </span>
-                              )}
-                            </div>
                           </div>
+                        </td>
+                        {/* Transaction ID */}
+                        <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                          {donor.transactionId || "-"}
                         </td>
 
                         {/* Amount */}
                         <td className="whitespace-nowrap py-3 pl-3 pr-6 text-right font-bold text-emerald-700 sm:pr-8">
                           ৳{donor.amount.toLocaleString()}
+                        </td>
+                        {/* Time - hidden on mobile, or show below name if you want */}
+                        <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                          <div className="flex items-center gap-1.5">
+                            <Clock size={16} />
+                            {moment(donor.date).fromNow()}
+                          </div>
                         </td>
                         <td className="whitespace-nowrap py-4 pr-6 text-right text-sm font-medium">
                           {role === "admin" && (

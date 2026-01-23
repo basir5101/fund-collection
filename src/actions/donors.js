@@ -13,6 +13,7 @@ export async function addDonor(formData) {
       medium: formData.get("medium"),
       message: formData.get("message"),
       transactionId: formData.get("transactionId"),
+      date: formData.get("date") || Date.now(),
     };
 
     await Donor.create(rawData);

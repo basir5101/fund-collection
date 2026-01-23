@@ -1,24 +1,21 @@
 import { getDonors } from "@/actions/donors";
+import bankLogo from "@/assets/icons/bank.png";
+import bkashLogo from "@/assets/icons/bkash.png";
+import helpLogo from "@/assets/icons/help.png";
+import nagadLogo from "@/assets/icons/nagad.png";
+import rocketLogo from "@/assets/icons/rocket.png";
+import websiteLogo from "@/assets/icons/website.png";
 import {
   ChevronLeft,
   ChevronRight,
   Clock,
   Globe,
-  Heart,
   Landmark,
-  SearchX,
-  User,
 } from "lucide-react";
+import moment from "moment";
+import Image from "next/image";
 import Link from "next/link";
 import SearchDonors from "./SearchDonors";
-import moment from "moment";
-import bkashLogo from "@/assets/icons/bkash.png";
-import nagadLogo from "@/assets/icons/nagad.png";
-import rocketLogo from "@/assets/icons/rocket.png";
-import helpLogo from "@/assets/icons/help.png";
-import bankLogo from "@/assets/icons/bank.png";
-import websiteLogo from "@/assets/icons/website.png";
-import Image from "next/image";
 
 export default async function DonorsPage({ searchParams }) {
   const params = await searchParams;
@@ -101,21 +98,21 @@ export default async function DonorsPage({ searchParams }) {
                 </th>
                 <th
                   scope="col"
-                  className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                  className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
+                >
+                  পরিমাণ
+                </th>
+                <th
+                  scope="col"
+                  className="sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
                 >
                   সময়
                 </th>
                 <th
                   scope="col"
-                  className="hidden sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
+                  className="sm:table-cell px-3 py-4 text-left text-sm font-semibold text-emerald-800"
                 >
                   ট্রাঞ্জেকশন ID
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-4 text-right text-sm font-semibold text-emerald-800 sm:pr-8"
-                >
-                  পরিমাণ
                 </th>
               </tr>
             </thead>
@@ -145,7 +142,7 @@ export default async function DonorsPage({ searchParams }) {
                       <td className="whitespace-nowrap py-3 pl-6 pr-3 sm:pl-8">
                         <div className="flex items-center gap-3">
                           <div className="font-medium text-emerald-900">
-                            {donor.name}
+                            {donor.name || "বেনামী"}
                             {idx === 0 && (
                               <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
                                 সর্বশেষ
@@ -154,15 +151,19 @@ export default async function DonorsPage({ searchParams }) {
                           </div>
                         </div>
                       </td>
+                      {/* Amount */}
+                      <td className="whitespace-nowrap py-3 pl-3 pr-6 text-right font-bold text-emerald-700 sm:pr-8">
+                        ৳{donor.amount.toLocaleString()}
+                      </td>
 
                       {/* Time - hidden on mobile, or show below name if you want */}
-                      <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                      <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
                         <div className="flex items-center gap-1.5">
                           <Clock size={16} />
                           {moment(donor.date).fromNow()}
                         </div>
                       </td>
-                      <td className="hidden whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
+                      <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
                         <div className="flex items-center gap-2">
                           {methodInfo.logo ? (
                             <div
@@ -204,11 +205,6 @@ export default async function DonorsPage({ searchParams }) {
                             )}
                           </div>
                         </div>
-                      </td>
-
-                      {/* Amount */}
-                      <td className="whitespace-nowrap py-3 pl-3 pr-6 text-right font-bold text-emerald-700 sm:pr-8">
-                        ৳{donor.amount.toLocaleString()}
                       </td>
                     </tr>
                   );

@@ -80,7 +80,7 @@ export default async function LatestDonorsMarquee() {
                           )}
                         </div>
                         <div className="font-medium text-emerald-900">
-                          {donor.name}
+                          {donor.name || "বেনামী"}
                           {idx === 0 && (
                             <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
                               সর্বশেষ

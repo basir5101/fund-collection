@@ -1,9 +1,8 @@
 "use client";
 import { Pencil, Plus, Trash2, User as UserIcon } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import UsersModal from "./UsersModal";
-import { useState } from "react";
 
 const UsersList = ({ users }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -151,13 +150,11 @@ const UsersList = ({ users }) => {
         user={selectedUser}
         onSubmit={async (data) => {
           // handle create / update (call API or server action)
-          console.log("Saving:", data);
           // after success:
           setModalOpen(false);
         }}
         onDelete={async (id) => {
           // handle delete
-          console.log("Deleting:", id);
           setModalOpen(false);
         }}
         isLoading={false}

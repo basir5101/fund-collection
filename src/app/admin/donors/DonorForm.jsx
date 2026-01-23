@@ -18,6 +18,9 @@ export default function DonorForm() {
   const inputStyle =
     "w-full p-1 rounded-lg border border-green-100 focus:ring-2 focus:ring-green-500 outline-none bg-green-50/30";
 
+  // Helper to get today's date in YYYY-MM-DD format for the defaultValue
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-green-50 mb-10">
       <h3 className="text-xl font-bold text-green-900 mb-6 flex items-center">
@@ -40,7 +43,7 @@ export default function DonorForm() {
           className={inputStyle}
         />
         <select name="medium" className={inputStyle} required>
-          <option value="">পেমেন্ট মিডিয়াম বেছে নিন</option>
+          <option value="">পেমেন্ট মিডিয়াম বেছে নিন</option>
           <option value="campaign">Campaign</option>
           <option value="bkash">BKash</option>
           <option value="nagad">Nagad</option>
@@ -54,6 +57,17 @@ export default function DonorForm() {
           className={inputStyle}
           required
         />
+
+        {/* --- Added Date Field Here --- */}
+        <input
+          name="date"
+          type="date"
+          defaultValue={today}
+          className={inputStyle}
+          required
+        />
+        {/* ---------------------------- */}
+
         <div className="md:col-span-2">
           <textarea
             name="message"
@@ -64,7 +78,7 @@ export default function DonorForm() {
         </div>
         <button
           disabled={loading}
-          className="md:col-span-2 flex w-32 justify-center  bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-md transition-all disabled:bg-green-300"
+          className="md:col-span-2 flex w-32 justify-center bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-md transition-all disabled:bg-green-300"
         >
           {loading ? "Adding..." : "Add"}
         </button>
