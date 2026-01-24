@@ -14,7 +14,6 @@ export async function GET(request) {
   try {
     const token = await getEPSToken();
     verification = await verifyEPSPayment(token, merchantTxnId);
-    console.log("Verification Result:", verification);
   } catch (error) {
     console.error("Payment Success Handling Error:", error);
     redirect("/payment/error?msg=Verification System Error");

@@ -18,20 +18,17 @@ export async function getEPSToken() {
     process.env.EPS_HASH_KEY,
   );
 
-  const response = await fetch(
-    "https://sandboxpgapi.eps.com.bd/v1/Auth/GetToken",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-hash": hash,
-      },
-      body: JSON.stringify({
-        userName: process.env.EPS_USERNAME,
-        password: process.env.EPS_PASSWORD,
-      }),
+  const response = await fetch(`${process.env.EPS_BASE_URL}/v1/Auth/GetToken`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-hash": hash,
     },
-  );
+    body: JSON.stringify({
+      userName: process.env.EPS_USERNAME,
+      password: process.env.EPS_PASSWORD,
+    }),
+  });
 
   const data = await response.json();
   return data.token; // Valid JWT for subsequent calls
@@ -84,7 +81,7 @@ export async function initiateEPSPayment(token, paymentData) {
     };
 
     const response = await fetch(
-      "https://sandboxpgapi.eps.com.bd/v1/EPSEngine/InitializeEPS", // Correct Endpoint
+      `${process.env.EPS_BASE_URL}/v1/EPSEngine/InitializeEPS`, // Correct Endpoint
       {
         method: "POST",
         headers: {
@@ -123,7 +120,7 @@ export async function verifyEPSPayment(token, merchantTxnId) {
     // 2. Call the Verify Transaction API [cite: 141]
     // Try both casing if one fails, but usually, it's camelCase for the API
     const response = await fetch(
-      `https://sandboxpgapi.eps.com.bd/v1/EPSEngine/CheckMerchantTransactionStatus?merchantTransactionId=${merchantTxnId}`,
+      `${process.env.EPS_BASE_URL}/v1/EPSEngine/CheckMerchantTransactionStatus?merchantTransactionId=${merchantTxnId}`,
       {
         method: "GET",
         headers: {
