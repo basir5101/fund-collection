@@ -1,7 +1,7 @@
 "use client";
 import { getEPSToken, initiateEPSPayment } from "@/actions/payment";
 import { motion } from "framer-motion";
-import { ArrowLeft, Heart, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -83,13 +83,13 @@ const Donate = () => {
         className="bg-white rounded-3xl shadow-2xl p-8 border border-slate-100"
       >
         <div className="mb-7 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-green-800 mb-3 flex items-center justify-center gap-2">
-            <Heart className="text-green-500" fill="currentColor" size={32} />
-            রাহিমকে সহযোগিতা করুন
+          <h2 className="text-xl md:text-2xl font-bold text-green-800 mb-3 flex items-center justify-center gap-2">
+            {/* <Heart className="text-green-500" fill="currentColor" size={32} /> */}
+            ওমর শরীফ সরকারকে সহযোগিতা করুন
           </h2>
           <div className="max-w-xl mx-auto text-sm text-gray-700 leading-relaxed mb-4">
-            ছোট্ট রাহিম গত ৩ মাস ধরে ক্যান্সারের সাথে লড়াই করছে। বাবা রিকশাচালক,
-            পরিবারের পক্ষে চিকিৎসার খরচ চালানো খুব কঠিন হয়ে পড়েছে।
+            বোন ক্যান্সারের সাথে লড়াই করছে। বাবা রিকশাচালক, পরিবারের পক্ষে
+            চিকিৎসার খরচ চালানো খুব কঠিন হয়ে পড়েছে।
           </div>
         </div>
 
