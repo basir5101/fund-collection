@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Helping Hands",
+  title: "Donate For Sharif",
   description: "ক্যাম্পেইনের সাহায্যের হাত বাড়িয়ে দিয়েছেন",
 };
 

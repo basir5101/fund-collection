@@ -27,6 +27,21 @@ export async function addDonor(formData) {
   }
 }
 
+export async function addDonorFromEPS(formData) {
+  await dbConnect();
+
+  try {
+    await Donor.create(formData);
+    revalidatePath("/admin/donors"); // পেজ রিফ্রেশ না করেই ডাটা আপডেট হবে
+    revalidatePath("/");
+    revalidatePath("/donors");
+
+    return { success: true, message: "ডোনার সফলভাবে যোগ করা হয়েছে!" };
+  } catch (error) {
+    return { success: false, message: "ত্রুটি: " + error.message };
+  }
+}
+
 export async function getDonors(page = 1, limit = 20, searchTerm = "") {
   await dbConnect();
   const skip = (page - 1) * limit;
