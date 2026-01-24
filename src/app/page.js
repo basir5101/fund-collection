@@ -3,13 +3,14 @@ import GalleryWrapper from "@/components/GalleryWrapper";
 import Hero from "@/components/Hero";
 import LatestDonorsMarquee from "@/components/LatestDonorsMarquee";
 import { Loader } from "@/components/Loader";
+import TeamSection from "@/components/TeamSection";
 import WhyCampaign from "@/components/WhyCampaign";
 import { MOCK_DONORS } from "@/lib/constant";
 import { Suspense } from "react";
 
 export default async function page() {
   return (
-    <div className="space-y-16 pb-20">
+    <div className="space-y-16">
       <Hero />
       <Suspense fallback={<Loader />}>
         <DonationWrapper />
@@ -19,6 +20,7 @@ export default async function page() {
       <Suspense fallback={<Loader />}>
         <GalleryWrapper />
       </Suspense>
+      <TeamSection />
     </div>
   );
 }

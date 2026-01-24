@@ -51,7 +51,8 @@ export default function Hero() {
         <div className="">
           <div className="max-w-lg relative">
             <Image
-              src={heroBanner}
+              // src={heroBanner}
+              src="/sharif_banner.jpg"
               width={800}
               height={800}
               alt="Hero Banner Image"
