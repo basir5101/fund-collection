@@ -126,7 +126,7 @@ const Navbar = ({ user = null }) => {
               </Link>
               <Link
                 href="/victim/sharif"
-                className="text-slate-600 hover:text-green-500 transition-colors duration-200"
+                className="text-slate-600 hover:text-green-500 transition-colors duration-200 text-lg"
               >
                 ওমর শরীফের কথা
               </Link>

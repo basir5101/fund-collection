@@ -45,10 +45,10 @@ export default function Hero() {
               দান করুন
             </Link>
             <Link
-              href="/victim/omar-sharif"
-              className="items-center gap-2 bg-green-500 hover:bg-green-500 text-white text-base lg:text-lg font-bold py-3 px-8 lg:py-4 lg:px-12 rounded-full shadow-lg shadow-green-100 transition-all transform hover:scale-105 active:scale-95"
+              href="/victim/sharif"
+              className="items-center gap-2 border border-green-700 hover:text-white hover:bg-green-500 text-green-700 text-base lg:text-lg font-bold py-3 px-8 lg:py-4 lg:px-12 rounded-full shadow-lg shadow-green-100 transition-all transform hover:scale-105 active:scale-95"
             >
-              তার সম্পর্কে বিস্তারিত জানুন
+              শরীফ সম্পর্কে বিস্তারিত
             </Link>
           </motion.div>
         </div>
