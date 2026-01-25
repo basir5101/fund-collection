@@ -3,13 +3,11 @@ import { motion } from "framer-motion";
 import {
   Activity,
   AlertTriangle,
-  ArrowLeft,
   Calendar,
   Droplets,
   GraduationCap,
   Heart,
   MapPin,
-  Share2,
   Stethoscope,
   Users,
 } from "lucide-react";
@@ -31,31 +29,6 @@ export default function OmarSharifBiography() {
   ];
   return (
     <div className="bg-slate-50 min-h-screen pb-20 font-sans">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-slate-600 hover:text-green-600 transition font-semibold"
-          >
-            <ArrowLeft size={20} /> ফিরে যান
-          </Link>
-          <div className="flex gap-2">
-            <button
-              onClick={() =>
-                navigator.share({
-                  title: "ওমর শরীফের জীবন বাঁচাতে এগিয়ে আসুন",
-                  url: window.location.href,
-                })
-              }
-              className="flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-bold hover:bg-green-100 transition"
-            >
-              <Share2 size={16} /> শেয়ার করুন
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-6xl mx-auto px-4 pt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Detailed Biography */}
         <div className="lg:col-span-2 space-y-8">
