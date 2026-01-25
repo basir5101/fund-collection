@@ -41,6 +41,16 @@ const Footer = () => {
                 <Phone size={16} className="text-green-500" /> +880 01517966762
                 (বিকাশ/নগদ/রকেট(personal))
               </li>
+              {/* link for victim sharif */}
+              <li className="flex items-center gap-2">
+                <MapPin size={16} className="text-green-500" />
+                <a
+                  href="/victim/sharif"
+                  className="hover:underline text-blue-500"
+                >
+                  ওমর শরীফের বিস্তারিত তথ্য দেখুন
+                </a>
+              </li>
               {/* <li className="flex items-center gap-2">
                 <Mail size={16} className="text-green-500" />{" "}
                 support@saveomar.com
