@@ -26,7 +26,7 @@ const Navbar = ({ user = null }) => {
   useEffect(() => {
     const handler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setIsOpen(false);
+        setIsOpen(!isOpen);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -54,7 +54,7 @@ const Navbar = ({ user = null }) => {
               className="flex items-center gap-2"
             >
               <Image
-                src="/logo.PNG"
+                src="/logos.png"
                 alt="Logo"
                 width={130}
                 height={20}
@@ -70,6 +70,14 @@ const Navbar = ({ user = null }) => {
               className="text-slate-600 hover:text-green-500 transition-colors duration-200"
             >
               মূল পাতা
+            </Link>
+
+            {/* a route for victim details */}
+            <Link
+              href="/victim/sharif"
+              className="text-slate-600 hover:text-green-500 transition-colors duration-200"
+            >
+              ওমর শরীফের কথা
             </Link>
             <Link
               href="/donors"
@@ -115,6 +123,12 @@ const Navbar = ({ user = null }) => {
                 onClick={() => setIsOpen(false)}
               >
                 মূল পাতা
+              </Link>
+              <Link
+                href="/victim/sharif"
+                className="text-slate-600 hover:text-green-500 transition-colors duration-200"
+              >
+                ওমর শরীফের কথা
               </Link>
               <Link
                 href="/donors"

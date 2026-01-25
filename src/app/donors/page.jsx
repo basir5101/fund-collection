@@ -22,7 +22,12 @@ export default async function DonorsPage({ searchParams }) {
   const page = parseInt(params.page) || 1;
   const search = params.search || "";
 
-  const { donors, totalPages, currentPage } = await getDonors(page, 20, search);
+  const { donors, totalPages, currentPage } = await getDonors(
+    page,
+    20,
+    search,
+    true,
+  );
 
   // Define payment mediums and their display info
   const paymentMethods = {
@@ -142,7 +147,7 @@ export default async function DonorsPage({ searchParams }) {
                       <td className="whitespace-nowrap py-3 pl-6 pr-3 sm:pl-8">
                         <div className="flex items-center gap-3">
                           <div className="font-medium text-emerald-900">
-                            {donor.name || "বেনামী"}
+                            {donor.name || "Anonymous donor"}
                             {idx === 0 && (
                               <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
                                 সর্বশেষ
@@ -160,7 +165,12 @@ export default async function DonorsPage({ searchParams }) {
                       <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">
                         <div className="flex items-center gap-1.5">
                           <Clock size={16} />
-                          {moment(donor.date).fromNow()}
+                          {
+                            // যদি সময়ের পার্থক্য ২৪ ঘণ্টার বেশি হয়
+                            moment().diff(moment(donor.date), "hours") > 24
+                              ? moment(donor.date).format("DD MMM, YYYY") // শুধু ডেট দেখাবে (যেমন: 25 Jan, 2026)
+                              : moment(donor.date).fromNow() // ২৪ ঘণ্টার কম হলে '2 hours ago' টাইপ দেখাবে
+                          }
                         </div>
                       </td>
                       <td className="whitespace-nowrap py-3 px-3 text-sm text-emerald-600 sm:table-cell">

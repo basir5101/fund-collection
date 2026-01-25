@@ -77,9 +77,7 @@ export default function OmarSharifBiography() {
                 <span className="inline-block bg-red-100 text-red-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
                   জরুরী ক্যান্সার চিকিৎসা সহায়তা
                 </span>
-                <h1 className="text-4xl font-black text-slate-800">
-                  ওমর শরীফ সরকার
-                </h1>
+                <h1 className="text-4xl font-black text-slate-800">ওমর শরীফ</h1>
                 <div className="flex flex-wrap justify-center md:justify-start gap-4 text-slate-600 font-medium">
                   <div className="flex items-center gap-1.5">
                     <MapPin size={18} className="text-green-500" /> ত্রিশাল,

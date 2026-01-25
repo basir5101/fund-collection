@@ -21,7 +21,7 @@ export const MOCK_DONORS = [
   },
   {
     id: "2",
-    name: "বেনামী দাতা",
+    name: "Anonymous donor",
     amount: 10000,
     currency: "BDT",
     message: "আল্লাহ সহায় হোন।",

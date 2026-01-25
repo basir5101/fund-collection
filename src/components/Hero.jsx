@@ -15,7 +15,7 @@ export default function Hero() {
             className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-6"
           >
             মেধাবী শিক্ষার্থী{" "}
-            <span className="text-green-500"> ওমরের জীবন বাঁচাতে </span>
+            <span className="text-green-500"> ওমর শরীফের জীবন বাঁচাতে </span>
             <br />
             <span className="text-xl lg:text-3xl">আমাদের সবার সাহায্য চাই</span>
           </motion.h1>
@@ -26,30 +26,29 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="text-lg md:text-xl text-slate-600 max-w-2xl mb-10 leading-relaxed"
           >
-            বশেমুরবিপ্রবি-র পদার্থবিজ্ঞান বিভাগের মেধাবী ছাত্র{" "}
-            <strong>ওমর শরীফ সরকার</strong> এখন হাড়ের ক্যান্সারের
-            (অস্টিওসারকোমা) সাথে যুদ্ধ করছেন। ২২ বার রক্ত দিয়ে মানুষের জীবন
-            বাঁচানো এই পরোপকারী তরুণের সুচিকিৎসার জন্য জরুরি ভিত্তিতে ২৫-৩০ লক্ষ
-            টাকা প্রয়োজন।
+            গোবিপ্রবির পদার্থবিজ্ঞান বিভাগের মেধাবী ছাত্র{" "}
+            <strong>ওমর শরীফ </strong> এখন হাড়ের ক্যান্সারের (অস্টিওসারকোমা)
+            সাথে যুদ্ধ করছেন। ২২ বার রক্ত দিয়ে মানুষের জীবন বাঁচানো এই পরোপকারী
+            তরুণের সুচিকিৎসার জন্য জরুরি ভিত্তিতে ২৫-৩০ লক্ষ টাকা প্রয়োজন।
           </motion.p>
 
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex lg:flex flex-col lg:flex-row gap-4"
           >
             <Link
               href="/donate"
-              className="bg-green-500 text-white text-base py-3 px-6 w-fit lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl hover:bg-green-600 transform hover:scale-105 transition"
+              className="bg-green-500 text-white text-base py-3 px-6  lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl hover:bg-green-600 transform hover:scale-105 transition w-full lg:w-fit"
             >
-              ওমরকে বাঁচাতে দান করুন
+              দান করুন
             </Link>
             <Link
-              href="/victim/sharif"
-              className=" text-blue-500 text-base py-3 px-6 w-fit lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl  transform hover:scale-105 transition"
+              href="/victim/omar-sharif"
+              className="items-center gap-2 bg-green-500 hover:bg-green-500 text-white text-base lg:text-lg font-bold py-3 px-8 lg:py-4 lg:px-12 rounded-full shadow-lg shadow-green-100 transition-all transform hover:scale-105 active:scale-95"
             >
-              আরও জানুন
+              তার সম্পর্কে বিস্তারিত জানুন
             </Link>
           </motion.div>
         </div>

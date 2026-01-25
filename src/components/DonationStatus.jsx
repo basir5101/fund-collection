@@ -12,7 +12,7 @@ export default function DonationStatus({ stats, event }) {
   // 2. Total Progress Percentage
   const totalPercentage = Math.min(
     (totalCollected / targetAmount) * 100,
-    100
+    100,
   ).toFixed(1);
 
   // 3. Source Configuration
@@ -53,8 +53,8 @@ export default function DonationStatus({ stats, event }) {
       bg: "bg-blue-50",
     },
     {
-      label: "ক্যাম্পেইন",
-      key: "campain",
+      label: "অফলাইন",
+      key: "campaign",
       icon: <HandHelping size={24} />,
       color: "text-teal-600",
       bg: "bg-teal-50",
@@ -105,7 +105,7 @@ export default function DonationStatus({ stats, event }) {
           className={twMerge(
             "absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-sm font-bold",
             totalPercentage > 70 && "text-white",
-            totalPercentage > 60 && "lg:text-white"
+            totalPercentage > 60 && "lg:text-white",
           )}
         >
           {totalPercentage}% অর্জিত

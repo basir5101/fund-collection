@@ -4,7 +4,7 @@ import moment from "moment";
 import Link from "next/link";
 
 export default async function LatestDonorsMarquee() {
-  const donorResponse = await getDonors(1, 5);
+  const donorResponse = await getDonors(1, 5, "", true);
   const donors = donorResponse.donors;
   return (
     <section className="bg-[#F7FCFA] py-16 px-4">
@@ -81,7 +81,7 @@ export default async function LatestDonorsMarquee() {
                           )}
                         </div>
                         <div className="font-medium text-emerald-900">
-                          {donor.name || "বেনামী"}
+                          {donor.name || "Anonymous donor"}
                           {idx === 0 && (
                             <span className="ml-2 inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
                               সর্বশেষ
@@ -95,7 +95,12 @@ export default async function LatestDonorsMarquee() {
                     <td className="hidden whitespace-nowrap py-5 px-3 text-sm text-emerald-600 sm:table-cell">
                       <div className="flex items-center gap-1.5">
                         <Clock size={16} />
-                        {moment(donor.date).fromNow()}
+                        {
+                          // যদি সময়ের পার্থক্য ২৪ ঘণ্টার বেশি হয়
+                          moment().diff(moment(donor.date), "hours") > 24
+                            ? moment(donor.date).format("DD MMM, YYYY") // শুধু ডেট দেখাবে (যেমন: 25 Jan, 2026)
+                            : moment(donor.date).fromNow() // ২৪ ঘণ্টার কম হলে '2 hours ago' টাইপ দেখাবে
+                        }
                       </div>
                     </td>
 

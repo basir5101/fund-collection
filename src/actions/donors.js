@@ -45,14 +45,27 @@ export async function addDonorFromEPS(formData) {
   }
 }
 
-export async function getDonors(page = 1, limit = 20, searchTerm = "") {
+export async function getDonors(
+  page = 1,
+  limit = 20,
+  searchTerm = "",
+  client = false,
+) {
   await dbConnect();
   const skip = (page - 1) * limit;
 
-  // Exact Match Logic
-  const query = searchTerm
-    ? { transactionId: searchTerm } // Matches the string exactly (Case-Sensitive)
-    : {};
+  // 1. Initialize an empty query object
+  const query = {};
+
+  // 2. Add "medium" filter only if client is true
+  if (client) {
+    query.medium = { $ne: "campaign" };
+  }
+
+  // 3. Add search logic if a searchTerm is provided
+  if (searchTerm) {
+    query.transactionId = searchTerm;
+  }
 
   const donors = await Donor.find(query)
     .sort({ date: -1 })
