@@ -1,12 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import { Share2 } from "lucide-react";
-// import ProgressBar from '../components/ProgressBar';
 import Link from "next/link";
+import Image from "next/image";
 import heroBanner from "@/assets/hero/hero-banner.png";
 import paymentIcon from "@/assets/icons/payment.png";
-import Image from "next/image";
-import { div } from "framer-motion/client";
 
 export default function Hero() {
   return (
@@ -18,17 +15,23 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-6"
           >
-            একটি জীবন বাঁচাতে <br />
-            <span className="text-green-500">আমাদের সবার সাহায্য চাই</span>
+            মেধাবী শিক্ষার্থী{" "}
+            <span className="text-green-500"> ওমরের জীবন বাঁচাতে </span>
+            <br />
+            <span className="text-xl lg:text-3xl">আমাদের সবার সাহায্য চাই</span>
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-slate-600 max-w-2xl mb-10"
+            className="text-lg md:text-xl text-slate-600 max-w-2xl mb-10 leading-relaxed"
           >
-            আমাদের কাছের মানুষটি ক্যান্সারের সাথে যুদ্ধ করছে। চিকিৎসার জন্য
-            বিপুল অর্থের প্রয়োজন। আপনার সামান্য দান তার জীবন ফিরিয়ে দিতে পারে।
+            বশেমুরবিপ্রবি-র পদার্থবিজ্ঞান বিভাগের মেধাবী ছাত্র{" "}
+            <strong>ওমর শরীফ সরকার</strong> এখন হাড়ের ক্যান্সারের
+            (অস্টিওসারকোমা) সাথে যুদ্ধ করছেন। ২২ বার রক্ত দিয়ে মানুষের জীবন
+            বাঁচানো এই পরোপকারী তরুণের সুচিকিৎসার জন্য জরুরি ভিত্তিতে ২৫-৩০ লক্ষ
+            টাকা প্রয়োজন।
           </motion.p>
 
           <motion.div
@@ -41,17 +44,15 @@ export default function Hero() {
               href="/donate"
               className="bg-green-500 text-white text-base py-3 px-6 w-fit lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl hover:bg-green-600 transform hover:scale-105 transition"
             >
-              এখনই দান করুন
+              ওমরকে বাঁচাতে দান করুন
             </Link>
-            {/* <button className="flex items-center justify-center gap-2 border-2 border-slate-200 px-8 py-4 rounded-full font-bold hover:bg-slate-50 transition">
-            <Share2 size={20} /> শেয়ার করুন
-          </button> */}
           </motion.div>
         </div>
         <div className="">
           <div className="max-w-lg relative">
             <Image
-              src={heroBanner}
+              // src={heroBanner}
+              src="/sharif_banner.jpg"
               width={800}
               height={800}
               alt="Hero Banner Image"
@@ -62,10 +63,10 @@ export default function Hero() {
                 <div className="bg-green-200 rounded-full w-10 h-10 grid shrink-0 place-items-center p-2">
                   <Image
                     src={paymentIcon}
-                    width={60}
-                    height={60}
-                    alt="Book icon"
-                    className="w-full"
+                    width={40}
+                    height={40}
+                    alt="Payment Icon"
+                    className="object-contain"
                   />
                 </div>
                 <div className="text-sm">
