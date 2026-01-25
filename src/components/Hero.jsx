@@ -1,9 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import heroBanner from "@/assets/hero/hero-banner.png";
 import paymentIcon from "@/assets/icons/payment.png";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -45,6 +44,12 @@ export default function Hero() {
               className="bg-green-500 text-white text-base py-3 px-6 w-fit lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl hover:bg-green-600 transform hover:scale-105 transition"
             >
               ওমরকে বাঁচাতে দান করুন
+            </Link>
+            <Link
+              href="/victim/sharif"
+              className=" text-blue-500 text-base py-3 px-6 w-fit lg:text-lg font-bold lg:px-12 lg:py-4 rounded-full shadow-2xl  transform hover:scale-105 transition"
+            >
+              আরও জানুন
             </Link>
           </motion.div>
         </div>

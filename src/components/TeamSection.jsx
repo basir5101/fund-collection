@@ -1,5 +1,4 @@
-import React from "react";
-import { Github, Linkedin, MessageCircle, Plus } from "lucide-react"; // MessageCircle আইকনটি মেসেঞ্জারের জন্য
+import { Github, Linkedin, MessageCircle } from "lucide-react"; // MessageCircle আইকনটি মেসেঞ্জারের জন্য
 import Image from "next/image";
 
 const TeamSection = () => {
@@ -8,7 +7,7 @@ const TeamSection = () => {
       name: "আব্দুল বাসির",
       role: "লিড ব্যাকএন্ড ডেভেলপার",
       company: "PRDUA Research and Pvt Limited",
-      image: "/images/basir.jpg",
+      image: "/images/basir.png",
       github: "https://github.com/basir5101",
       linkedin: "https://www.linkedin.com/in/abdul-basir-b087971b1/",
       messenger: "https://m.me/basir5101",
@@ -17,7 +16,7 @@ const TeamSection = () => {
       name: "রুবায়েত বিল্লাহ",
       role: "লিড ফ্রন্টএন্ড ডেভেলপার",
       company: "PRDUA Research and Pvt Limited",
-      image: "/images/rubayet.jpg",
+      image: "/images/rubayet.png",
       github: "https://github.com/Rubayet-billah",
       linkedin: "https://www.linkedin.com/in/rubayet-billah/",
       messenger: "https://m.me/md.rubayetbillah",

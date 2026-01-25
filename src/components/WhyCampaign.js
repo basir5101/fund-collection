@@ -1,4 +1,5 @@
 import { Clock, HandCoins } from "lucide-react";
+import Link from "next/link";
 
 export default function WhyCampaign() {
   return (
@@ -64,6 +65,15 @@ export default function WhyCampaign() {
             </div>
           </div>
         </div>
+      </div>
+      {/* link for more info */}
+      <div className="mt-8 text-center">
+        <Link
+          href="/victim/sharif"
+          className="text-green-600 font-semibold hover:underline"
+        >
+          ওমর শরীফ সরকারের সম্পর্কে আরও জানুন
+        </Link>
       </div>
     </section>
   );

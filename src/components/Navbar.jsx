@@ -54,9 +54,9 @@ const Navbar = ({ user = null }) => {
               className="flex items-center gap-2"
             >
               <Image
-                src="/logo.png"
+                src="/logo.PNG"
                 alt="Logo"
-                width={100}
+                width={130}
                 height={20}
                 // className="w-10 h-10"
               />

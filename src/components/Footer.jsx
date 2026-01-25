@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, MapPin, Phone, Globe } from "lucide-react";
+import { Facebook, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -39,13 +39,13 @@ const Footer = () => {
                 <span>চকরামপুর, ত্রিশাল, ময়মনসিংহ, বাংলাদেশ</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone size={16} className="text-green-500" /> +৮৮০ ১৭০০-০০০০০০
-                (বিকাশ/নগদ)
+                <Phone size={16} className="text-green-500" /> +880 01517966762
+                (বিকাশ/নগদ/রকেট(personal))
               </li>
-              <li className="flex items-center gap-2">
+              {/* <li className="flex items-center gap-2">
                 <Mail size={16} className="text-green-500" />{" "}
                 support@saveomar.com
-              </li>
+              </li> */}
             </ul>
           </div>
 

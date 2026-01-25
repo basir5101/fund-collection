@@ -61,7 +61,7 @@ export default async function DonorsPage({ searchParams }) {
       color: "bg-teal-100 text-teal-700 border-teal-200",
     },
     campaign: {
-      name: "ক্যাম্পেইন",
+      name: "অফলাইন",
       logo: helpLogo,
       color: "bg-yellow-100 text-yellow-700 border-yellow-200",
     },
@@ -141,7 +141,7 @@ export default async function DonorsPage({ searchParams }) {
                       colSpan={3}
                       className="py-12 text-center text-emerald-600/70"
                     >
-                      এখনো কোনো ডোনেশন আসেনি
+                      খুজে পাওয়া যায় নি
                     </td>
                   </tr>
                 ) : (
@@ -217,7 +217,7 @@ export default async function DonorsPage({ searchParams }) {
                           </div>
                         </td>
                         <td className="whitespace-nowrap py-4 pr-6 text-right text-sm font-medium">
-                          {role === "admin" && (
+                          {role === "admin" && donor.medium !== "website" && (
                             <DeleteDonorButton id={donor._id} />
                           )}
                         </td>

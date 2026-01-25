@@ -13,8 +13,11 @@ export async function addDonor(formData) {
       medium: formData.get("medium"),
       message: formData.get("message"),
       transactionId: formData.get("transactionId"),
-      date: formData.get("date") || Date.now(),
     };
+    const dateValue = formData.get("date");
+    if (dateValue) {
+      rawData.date = new Date(dateValue);
+    }
 
     await Donor.create(rawData);
     revalidatePath("/admin/donors"); // পেজ রিফ্রেশ না করেই ডাটা আপডেট হবে
@@ -46,9 +49,9 @@ export async function getDonors(page = 1, limit = 20, searchTerm = "") {
   await dbConnect();
   const skip = (page - 1) * limit;
 
-  // সার্চ টার্ম থাকলে transactionId দিয়ে ফিল্টার করবে
+  // Exact Match Logic
   const query = searchTerm
-    ? { transactionId: { $regex: searchTerm, $options: "i" } }
+    ? { transactionId: searchTerm } // Matches the string exactly (Case-Sensitive)
     : {};
 
   const donors = await Donor.find(query)

@@ -1,6 +1,7 @@
 import { getDonors } from "@/actions/donors";
-import { Clock, Heart, User } from "lucide-react";
+import { ArrowRight, Clock, Heart, User } from "lucide-react";
 import moment from "moment";
+import Link from "next/link";
 
 export default async function LatestDonorsMarquee() {
   const donorResponse = await getDonors(1, 5);
@@ -51,7 +52,7 @@ export default async function LatestDonorsMarquee() {
                     colSpan={3}
                     className="py-12 text-center text-emerald-600/70"
                   >
-                    এখনো কোনো ডোনেশন আসেনি
+                    খুজে পাওয়া যায় নি
                   </td>
                 </tr>
               ) : (
@@ -109,13 +110,16 @@ export default async function LatestDonorsMarquee() {
           </table>
         </div>
 
-        {/* Footer Text */}
-        {/* <div className="mt-12 text-center">
-          <p className="text-emerald-800/60 font-semibold text-base">
-            মোট <span className="text-emerald-600 font-bold text-lg">৫+</span>{" "}
-            জন ডোনার এই ক্যাম্পেইনে অংশ নিয়েছেন
-          </p>
-        </div> */}
+        {/* link to see all donors */}
+        <div className="mt-8 text-center">
+          <Link
+            href="/donors"
+            className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium"
+          >
+            সব ডোনার দেখুন
+            <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
     </section>
   );
