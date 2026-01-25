@@ -95,7 +95,13 @@ const Navbar = ({ user = null }) => {
                 এখনই দান করুন
               </Link>
               {/* Auth Links */}
-              {user && <AdminDropdown user={user} signOut={signOut} />}
+              {user && (
+                <AdminDropdown
+                  user={user}
+                  signOut={signOut}
+                  openNaver={setIsOpen}
+                />
+              )}
             </div>
           </nav>
 
@@ -127,6 +133,7 @@ const Navbar = ({ user = null }) => {
               <Link
                 href="/victim/sharif"
                 className="text-slate-600 hover:text-green-500 transition-colors duration-200 text-lg"
+                onClick={() => setIsOpen(false)}
               >
                 ওমর শরীফের কথা
               </Link>
@@ -144,7 +151,13 @@ const Navbar = ({ user = null }) => {
                 এখনই দান করুন
               </Link>
 
-              {user && <AdminDropdown user={user} signOut={signOut} />}
+              {user && (
+                <AdminDropdown
+                  user={user}
+                  signOut={signOut}
+                  openNaver={setIsOpen}
+                />
+              )}
             </div>
           </div>
         )}

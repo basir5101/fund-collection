@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const AdminDropdown = ({ user, signOut }) => {
+const AdminDropdown = ({ user, signOut, openNaver }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -25,6 +25,11 @@ const AdminDropdown = ({ user, signOut }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  function handleToggle() {
+    setIsOpen(!isOpen);
+    openNaver(false);
+  }
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -54,14 +59,14 @@ const AdminDropdown = ({ user, signOut }) => {
                 <Link
                   href="/profile"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleToggle}
                 >
                   <User2 size={16} /> Profile
                 </Link>
                 <Link
                   href="/admin"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleToggle}
                 >
                   <LayoutDashboard size={16} /> Dashboard
                 </Link>
@@ -70,7 +75,7 @@ const AdminDropdown = ({ user, signOut }) => {
                   <Link
                     href="/users"
                     className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleToggle}
                   >
                     <Users size={16} /> Users
                   </Link>
@@ -78,21 +83,21 @@ const AdminDropdown = ({ user, signOut }) => {
                 <Link
                   href="/admin/gallery"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleToggle}
                 >
                   <LayoutGrid size={16} /> Gallery
                 </Link>
                 <Link
                   href="/admin/donors"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleToggle}
                 >
                   <HandCoins size={16} /> Donors
                 </Link>
                 <Link
                   href="/admin/event"
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsOpen(false)}
+                  onClick={handleToggle}
                 >
                   <Calendar size={16} /> Event
                 </Link>
@@ -112,7 +117,7 @@ const AdminDropdown = ({ user, signOut }) => {
               <Link
                 href="/login"
                 className="flex items-center gap-2 px-4 py-2 text-sm text-green-600 hover:bg-gray-100 font-medium"
-                onClick={() => setIsOpen(false)}
+                onClick={handleToggle}
               >
                 <LogOutIcon size={16} className="rotate-180" /> Login
               </Link>
