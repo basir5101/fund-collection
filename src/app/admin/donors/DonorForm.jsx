@@ -61,6 +61,7 @@ export default function DonorForm() {
           name="amount"
           type="number"
           placeholder="টাকার পরিমাণ (৳)"
+          step={"any"}
           className={inputStyle}
           required
         />
