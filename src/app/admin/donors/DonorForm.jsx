@@ -24,8 +24,9 @@ export default function DonorForm() {
 
   // 1. Generate the current date and time in YYYY-MM-DDTHH:mm format
   const now = new Date();
-  const maxDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-    .toISOString()
+  const maxDateTime = now
+    .toLocaleString("sv-SE")
+    .replace(" ", "T")
     .slice(0, 16);
 
   return (

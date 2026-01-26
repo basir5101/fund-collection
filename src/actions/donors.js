@@ -16,7 +16,8 @@ export async function addDonor(formData) {
     };
     const dateValue = formData.get("date");
     if (dateValue) {
-      rawData.date = new Date(dateValue);
+      // rawData.date = new Date(dateValue);
+      rawData.date = new Date(`${dateValue}:00+06:00`);
     }
 
     await Donor.create(rawData);
