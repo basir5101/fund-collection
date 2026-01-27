@@ -1,4 +1,5 @@
 import DonationWrapper from "@/components/DonationWrapper";
+import FeedbackSection from "@/components/FeedbackSection";
 import GalleryWrapper from "@/components/GalleryWrapper";
 import Hero from "@/components/Hero";
 import LatestDonorsMarquee from "@/components/LatestDonorsMarquee";
@@ -21,6 +22,7 @@ export default async function page() {
         <GalleryWrapper />
       </Suspense>
       <TeamSection />
+      <FeedbackSection />
     </div>
   );
 }
