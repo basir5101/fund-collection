@@ -2,9 +2,9 @@
 // components/admin/UsersModal.jsx
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { X, Trash2, Save, UserPlus } from "lucide-react";
-import { addUser, deleteUser, registerUser, updateUser } from "@/actions/user";
+import { addUser, deleteUser, updateUser } from "@/actions/user";
+import { Save, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const UsersModal = ({
   isOpen,
@@ -198,7 +198,6 @@ const UsersModal = ({
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none bg-white"
                 disabled={isLoading}
               >
-                <option value="user">সাধারণ ব্যবহারকারী</option>
                 <option value="moderator">মডারেটর</option>
                 <option value="admin">অ্যাডমিন</option>
               </select>

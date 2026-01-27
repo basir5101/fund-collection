@@ -73,7 +73,7 @@ const AdminDropdown = ({ user, signOut, openNaver }) => {
 
                 {user?.role === "admin" && (
                   <Link
-                    href="/users"
+                    href="/admin/users"
                     className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={handleToggle}
                   >

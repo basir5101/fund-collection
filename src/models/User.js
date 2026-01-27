@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["admin", "moderator", "user"],
-      default: "user",
+      default: "moderator",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Check if the model already exists to prevent re-compilation in development
